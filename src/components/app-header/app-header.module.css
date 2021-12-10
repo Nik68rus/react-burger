@@ -1,4 +1,8 @@
 .header {
+  background: #1C1C21;
+}
+
+.wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;

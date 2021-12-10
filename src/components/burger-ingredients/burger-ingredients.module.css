@@ -1,4 +1,4 @@
-.ingridients {
+.ingredients {
   width: calc(50% - var(--offset-base-size) * 5);
   display: flex;
   flex-direction: column;

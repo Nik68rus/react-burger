@@ -46,3 +46,11 @@
   display: flex;
   align-items: center;
 }
+
+.btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}

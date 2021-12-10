@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -7,12 +7,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 
-class AppHeader extends Component {
-  render() {
-    return (
-      <header className={'container pt-4 pb-4 ' + styles.header}>
+const AppHeader = () => {
+  return (
+    <header className={'pt-4 pb-4 ' + styles.header}>
+      <div className={styles.wrapper + " container"}>
         <nav className={'text text_type_main-default ' + styles.menu}>
-          <a className={'p-5 mr-2 ' + styles.button + ' ' + styles.active} href="constructor">
+          <a
+            className={'p-5 mr-2 ' + styles.button + ' ' + styles.active}
+            href="constructor"
+          >
             <BurgerIcon />
             <span>Конструктор</span>
           </a>
@@ -30,9 +33,9 @@ class AppHeader extends Component {
             <span>Личный кабинет</span>
           </a>
         </nav>
-      </header>
-    );
-  }
+      </div>
+    </header>
+  );
 }
 
 export default AppHeader;

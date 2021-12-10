@@ -4,10 +4,6 @@
   align-items: center;
 }
 
-.heading {
-  align-self: flex-start;
-}
-
 .image {
   max-width: 100%;
 }

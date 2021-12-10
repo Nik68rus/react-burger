@@ -1,4 +1,4 @@
-.popup {
+.modal {
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -8,14 +8,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.6;
 }
 
 .content {
@@ -31,4 +23,9 @@
   position: absolute;
   top: calc(var(--offset-base-size) * 15);
   right: calc(var(--offset-base-size) * 10);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
 }
