@@ -1,0 +1,15 @@
+.order-details {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  width: auto;
+  height: 120px;
+}
+
+.footer-text {
+  color: #8585AD;
+}

@@ -1,0 +1,18 @@
+.ingredient {
+  text-align: center;
+  position: relative;
+}
+
+.ingredient img {
+  max-width: 100%;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price svg {
+  margin-left: calc(var(--offset-base-size) * 2);
+}

@@ -1,0 +1,10 @@
+.screen {
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+}

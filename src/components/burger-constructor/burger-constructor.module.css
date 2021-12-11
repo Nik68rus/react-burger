@@ -1,0 +1,56 @@
+.constructor {
+  width: calc(50% - var(--offset-base-size) * 5);
+  display: flex;
+  flex-direction: column;
+}
+
+.top,
+.bottom {
+  display: flex;
+}
+
+.content {
+  list-style: none;
+  margin-top: 0;
+  flex-shrink: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.item:last-of-type {
+  margin-bottom: 0;
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.summary svg {
+  margin-left: calc(var(--offset-base-size) * 4);
+  width: 33px;
+  height: 33px;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
