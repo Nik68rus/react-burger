@@ -1,4 +1,4 @@
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
+const URL = 'https://norma.nomoreparties.space/api';
 
 const currentBurger = [
   {

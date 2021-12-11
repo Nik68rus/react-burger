@@ -9,6 +9,10 @@
   flex-wrap: wrap;
 }
 
+.tab-controls > * {
+  flex-grow: 1;
+}
+
 .tab-content {
   height: 100%;
   overflow-y: auto;
