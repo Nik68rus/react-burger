@@ -1,27 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {ingredients, currentBurger} from '../../utils/data';
+import {URL, currentBurger} from '../../utils/data';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styles from './app.module.css';
 import Modal from '../modal/modal';
 
-const initialIngredient = ingredients[0];
-
 function App() {
+  const [ingredients, setIngredients] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [ingredientVisible, setIngredientVisible] = useState(false);
-  const [ingredient, setIngredient] = useState(initialIngredient);
+  const [ingredient, setIngredient] = useState(ingredients[0]);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    fetch(URL).then(response => response.json()).then(data => {
+      setIngredients(data.data);
+    }).catch(err => setError(true));
+  },[]);
 
   const popupCloseHandler = (evt:Event) => {
-    evt.preventDefault();
     setPopupVisible(false);
   }
 
   const popupOpenHandler = (evt:Event) => {
-    evt.preventDefault();
     setPopupVisible(true);
   }
 
@@ -39,12 +43,17 @@ function App() {
       <AppHeader />
       <main>
         <div className={styles.wrapper + " container"}>
-          <BurgerIngredients list={ingredients} cart={currentBurger} onIngredientClick={ingredientShowHandler}/>
-          <BurgerConstructor cart={currentBurger} onOrder={popupOpenHandler}/>
+          {error && (<p>Что-то пошло не так, перезагрузите страницу!</p>)}
+          {!error && 
+            <>
+              <BurgerIngredients list={ingredients} cart={currentBurger} onIngredientClick={ingredientShowHandler}/>
+              <BurgerConstructor cart={currentBurger} onOrder={popupOpenHandler}/>
+            </>
+          }
         </div>
         {popupVisible && (
           <Modal onClose={popupCloseHandler}>
-            <OrderDetails />
+            <OrderDetails id={'034536'} />
           </Modal>
         )}
         {ingredientVisible && (
