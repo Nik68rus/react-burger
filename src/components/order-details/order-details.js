@@ -16,7 +16,7 @@ const OrderDetails = ({id}) => {
 }
 
 OrderDetails.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

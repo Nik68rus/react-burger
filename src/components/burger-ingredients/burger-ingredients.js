@@ -1,17 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
 import PropTypes from 'prop-types';
 import { itemPropTypes } from '../../utils/prop-types';
+import { ConstructorContext } from '../../services/constructorContext';
 
 const tabs = [{id: 'bun', title: 'Булки'}, {id: 'sauce', title: 'Соусы'},{id: 'main', title: 'Начинки'}];
 
-
-
-const BurgerIngredients = ({list, cart, onIngredientClick}) => {
+const BurgerIngredients = ({list, onIngredientClick}) => {
   const [current, setCurrent] = useState('bun');
-  
+  const constructorContext = useContext(ConstructorContext);
+  const {cartState} = constructorContext;
+  const {cart} = cartState;
+
   useEffect(() => {
     const target = document.querySelector(`#${current}`)
     target.scrollIntoView({behavior: 'smooth'});
@@ -39,7 +41,9 @@ const BurgerIngredients = ({list, cart, onIngredientClick}) => {
             <h3 className="text text_type_main-medium mb-6" id={tabItem.id}>{tabItem.title}</h3>
             <ul className={styles.list + ' mb-10 pl-4 pr-4'}>
               {filteredList[tabItem.id].map(element => {
-                const itemsInCart = cart.filter(cartItem => cartItem._id === element._id);
+                const itemsInCart = cart.filter(cartItem => {
+                  return cartItem._id === element._id;
+                });
                 const amount = itemsInCart.length;
                 return (
                   <li  key={element['_id']} className={styles.item + ' mr-6 mb-10'}>
@@ -58,7 +62,6 @@ const BurgerIngredients = ({list, cart, onIngredientClick}) => {
 
 BurgerIngredients.propTypes = {
   list: PropTypes.arrayOf(itemPropTypes).isRequired,
-  cart: PropTypes.arrayOf(itemPropTypes).isRequired,
   onIngredientClick: PropTypes.func.isRequired,
 }
 
