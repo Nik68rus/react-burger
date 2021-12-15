@@ -19,6 +19,10 @@
   align-items: flex-start;
 }
 
+.content > * {
+  width: 100%;
+}
+
 .item {
   display: flex;
   align-items: center;
