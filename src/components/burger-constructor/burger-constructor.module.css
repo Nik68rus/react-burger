@@ -7,6 +7,8 @@
 .top,
 .bottom {
   display: flex;
+  justify-content: flex-end;
+  min-height: 80px;
 }
 
 .content {
@@ -21,16 +23,6 @@
 
 .content > * {
   width: 100%;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.item:last-of-type {
-  margin-bottom: 0;
 }
 
 .summary {
@@ -49,12 +41,4 @@
 .value {
   display: flex;
   align-items: center;
-}
-
-.btn {
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  padding: 0;
 }
