@@ -1,0 +1,57 @@
+.profile {
+  display: flex;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.link {
+  text-decoration: none;
+  color: #8585AD;
+  transition: color .3s ease;
+}
+
+.link:hover {
+  color: white;
+}
+
+.button {
+  background-color: transparent;
+  text-align: start;
+  border: none;
+  cursor: pointer;
+  transition: color .3s ease;
+  outline: none;
+}
+
+.button:hover {
+  color: white;
+}
+
+.active {
+  color: white;
+}
+
+.description {
+  color: #8585AD;
+}
+
+.form {
+  width: 480px;
+}
+
+.form :global .input__container {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.form :global .input_size_default {
+  width: 100%;
+}
+
+.actions > * {
+  margin-right: 24px;
+}

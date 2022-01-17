@@ -18,6 +18,7 @@ const initialState = {
   list: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
+  ingredientsLoaded: false,
 
   cart: [],
   currentIngredient: {},
@@ -35,6 +36,7 @@ const ingredientReducer = (state = initialState, action) => {
         list: action.payload,
         ingredientsRequest: false,
         ingredientsFailed: false,
+        ingredientsLoaded: true,
       };
     }
     case GET_INGREDIENTS_FAILED: {

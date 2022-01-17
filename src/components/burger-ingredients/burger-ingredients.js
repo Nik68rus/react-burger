@@ -7,6 +7,8 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { Loader } from '../loader/loader';
 import { REMOVE_INGREDIENT } from '../../services/actions/ingredient';
+import { useHistory } from 'react-router-dom';
+import { Paths } from '../../utils/data';
 
 const tabs = [{id: 'bun', title: 'Булки'}, {id: 'sauce', title: 'Соусы'},{id: 'main', title: 'Начинки'}];
 
@@ -18,9 +20,11 @@ const BurgerIngredients = () => {
   const currentIngredient = useSelector(store => store.ingredient.currentIngredient);
   const isLoading = useSelector(store => store.ingredient.ingredientsRequest);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const detailsHideHandler = () => {
     dispatch({type: REMOVE_INGREDIENT});
+    history.replace({pathname: Paths.HOME});
   }
 
   const tabClickHandler = (value) => {
@@ -109,7 +113,7 @@ const BurgerIngredients = () => {
         }
       </section>      
       {
-        currentIngredient._id && 
+        currentIngredient.modal && 
         <Modal onClose={detailsHideHandler} heading={'Детали ингредиента'}>
           <IngredientDetails />
         </Modal>

@@ -5,9 +5,13 @@ import { itemPropTypes } from '../../utils/prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import { SET_INGREDIENT } from '../../services/actions/ingredient';
 import {useDrag} from 'react-dnd';
+import {useHistory} from 'react-router-dom';
+import { Paths } from '../../utils/data';
 
 const Ingredient = ({item}) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const cart = useSelector(store => store.ingredient.cart);
 
   const [, ingRef] = useDrag({
@@ -19,7 +23,8 @@ const Ingredient = ({item}) => {
   amount = item.type === 'bun' && amount > 0 ? 2 : amount;
 
   const ingredientClickHandler = () => {
-    dispatch({type: SET_INGREDIENT, payload: item})
+    dispatch({type: SET_INGREDIENT, payload: {...item, modal: true}});
+    history.replace({ pathname: `${Paths.INGREDIENTS}/${item._id}`, state: { from: Paths.HOME } });
   }
 
   return (
