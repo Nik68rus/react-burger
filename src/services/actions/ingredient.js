@@ -1,6 +1,7 @@
+import { getCookie } from '../../utils/cookies';
 import {URL} from '../../utils/data';
 
-import { SET_ERROR, SET_MESSAGE } from './app';
+import { HIDE_LOADER, SET_ERROR, SET_MESSAGE, showNotification, SHOW_LOADER } from './app';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDENTS_SUCCESS';
@@ -50,28 +51,36 @@ export const getInredients = () => {
 export const makeOrder = (data) => {
   return (dispatch) => {
     dispatch({type: ORDER_REQUEST});
+    dispatch(showNotification('Мы обрабатываем ваш заказ. Пожалуйста подождите!'));
+    dispatch({type: SHOW_LOADER});
     fetch(`${URL}/orders`, {
       method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + getCookie('token')
       },
       body: JSON.stringify(data),
     })
-      .then((response) => {
+    .then((response) => {
+        dispatch({type: HIDE_LOADER});
         if (!response.ok) {
           dispatch({type: ORDER_FAILED});
           dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже! (${response.status})`});
           throw new Error(
             `Что-то пошло не так, попробуйте позже! (${response.status})`
-          );
-        }
-        return response.json();
-      })
-      .then((data) => {
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
         dispatch({type: ORDER_SUCCESS, payload: data});
         dispatch({type: RESET_CART});
       })
       .catch((err) => {
+        dispatch({type: HIDE_LOADER});
         dispatch({type: ORDER_FAILED});
       });
   }

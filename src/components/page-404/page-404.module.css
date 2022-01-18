@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #8585AD;
+  transition: color 0.3s ease-in-out;
+}
+
+.link:hover {
+  color: white;
+}

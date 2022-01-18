@@ -1,4 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
+import {PropTypes} from 'prop-types';
 import { useEffect, useState } from 'react';
 import { checkAuth } from '../../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,4 +36,12 @@ export const ProtectedRoute = ({ children, ...rest }) => {
       }
     />
   );
+}
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  rest: PropTypes.any,
 }

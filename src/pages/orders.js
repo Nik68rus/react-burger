@@ -4,8 +4,10 @@ import Layout from './layout';
 const OrdersPage = () => {
   return (
     <Layout>
-      <section>
-        Лента заказов
+      <section className="container mt-5">
+        <p className="text text_type_main-default">
+          Лента заказов
+        </p> 
       </section>
     </Layout>
   );

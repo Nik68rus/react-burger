@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import {ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage} from '../../pages';
 import { getInredients } from '../../services/actions/ingredient';
 import { checkAuth } from '../../services/actions/user';
@@ -41,10 +41,7 @@ function App() {
           <OrdersPage />
         </ProtectedRoute>
         <Route path={`${Paths.INGREDIENTS}/:id`} exact={true} render={
-          ({location}) => {
-            console.log('Loc - ', location);
-            console.log('his - ', history);            
-            
+          ({location}) => {            
             //@ts-ignore
             return location.state?.from === Paths.HOME ? <HomePage /> : <IngredientPage/>
           }

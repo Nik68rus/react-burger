@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './burger-constructor.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import { ADD_TO_CART, SET_CART, makeOrder, ORDER_RESET } from '../../services/actions/ingredient';
@@ -13,12 +13,15 @@ import Notification from '../notification/notification';
 import { useDrop } from 'react-dnd';
 import { showNotification } from '../../services/actions/app';
 import BurgerPart from '../burger-part/burger-part';
+import { useHistory } from 'react-router-dom';
+import { Paths } from '../../utils/data';
 
 const BurgerConstructor = () => {
-  const [orderVisible, setOrderVisible] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const cart = useSelector(store => store.ingredient.cart);
   const order = useSelector(store => store.ingredient.order);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
   const notification = useSelector(store => store.app.message);
 
   const [, dropTarget] = useDrop({
@@ -43,10 +46,12 @@ const BurgerConstructor = () => {
     const bunIndex = cart.findIndex(item => item.type === 'bun');
     const burgerInner = cart.filter(item => item.type !== 'bun');
 
-    if (bunIndex >= 0 && burgerInner.length > 0) {
+    if (bunIndex >= 0 && burgerInner.length > 0 && isAuthorized) {
       dispatch(makeOrder(data));
-      setOrderVisible(true);
     } 
+    if (!isAuthorized) {
+      history.replace({ pathname: Paths.LOGIN, state: { from: Paths.HOME } });
+    }
     if (bunIndex < 0) {
       dispatch(showNotification('Не бывает бургеров без булки! Выберите булку!'));
     }
@@ -56,7 +61,6 @@ const BurgerConstructor = () => {
   } 
 
   const orderCloseHandler = () => {
-    setOrderVisible(false);
     dispatch({type: ORDER_RESET});
   };
 
@@ -92,7 +96,7 @@ const BurgerConstructor = () => {
           </div>
         </>}
       </section>
-      {order.success && orderVisible && (
+      {order.success && (
         <Modal onClose={orderCloseHandler}>
           <OrderDetails id={order.order.number} />
         </Modal>
