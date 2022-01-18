@@ -6,7 +6,7 @@ import Layout from './layout';
 import { Paths } from '../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotification } from '../services/actions/app';
-import { requestRecovery } from '../services/actions/user';
+import { requestPasswordRecovery } from '../services/actions/user';
 
 const ForgotPasswordPage = () => {
   const [mail, setMail] = useState('');
@@ -25,7 +25,7 @@ const ForgotPasswordPage = () => {
     if (mail.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))
     } else {
-      dispatch(requestRecovery(mail))
+      dispatch(requestPasswordRecovery(mail))
     }
   };
 

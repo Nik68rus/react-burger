@@ -1,7 +1,8 @@
 import { getCookie } from '../../utils/cookies';
 import {URL} from '../../utils/data';
+import { getIngredientsFailed, getIngredientsRequest, getIngredientsSuccess, hideLoader, orderFailed, orderRequest, orderSuccess, resetCart, setError, setMessage, showLoader } from '.';
 
-import { HIDE_LOADER, SET_ERROR, SET_MESSAGE, showNotification, SHOW_LOADER } from './app';
+import {showNotification} from './app';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDENTS_SUCCESS';
@@ -24,12 +25,12 @@ export const ORDER_RESET = 'ORDER_RESET';
 
 export const getInredients = () => {
   return (dispatch) => {
-    dispatch({type: GET_INGREDIENTS_REQUEST});
+    dispatch(getIngredientsRequest());
     fetch(`${URL}/ingredients`)
     .then((response) => {
       if (!response.ok) {
-        dispatch({type: SET_ERROR});
-        dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже! (${response.status})`})
+        dispatch(setError());
+        dispatch(setMessage(`Что-то пошло не так, попробуйте позже! (${response.status})`))
         throw new Error(
           `Что-то пошло не так, попробуйте позже! (${response.status})`
         );
@@ -37,12 +38,12 @@ export const getInredients = () => {
       return response.json();
     })
     .then((data) => {
-      dispatch({type: GET_INGREDIENTS_SUCCESS, payload: data.data});
+      dispatch(getIngredientsSuccess(data.data));
     })
     .catch((err) => {
-      dispatch({type: GET_INGREDIENTS_FAILED})
-      dispatch({type: SET_ERROR});
-      dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже!`})
+      dispatch(getIngredientsFailed())
+      dispatch(setError());
+      dispatch(setMessage(`Что-то пошло не так, попробуйте позже!`))
     });
 
   }
@@ -50,9 +51,9 @@ export const getInredients = () => {
 
 export const makeOrder = (data) => {
   return (dispatch) => {
-    dispatch({type: ORDER_REQUEST});
+    dispatch(orderRequest());
     dispatch(showNotification('Мы обрабатываем ваш заказ. Пожалуйста подождите!'));
-    dispatch({type: SHOW_LOADER});
+    dispatch(showLoader());
     fetch(`${URL}/orders`, {
       method: 'POST',
       mode: 'cors',
@@ -66,8 +67,8 @@ export const makeOrder = (data) => {
     })
     .then((response) => {
       if (!response.ok) {
-        dispatch({type: ORDER_FAILED});
-        dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже! (${response.status})`});
+        dispatch(orderFailed());
+        dispatch(setMessage(`Что-то пошло не так, попробуйте позже! (${response.status})`));
         throw new Error(
           `Что-то пошло не так, попробуйте позже! (${response.status})`
           );
@@ -75,13 +76,14 @@ export const makeOrder = (data) => {
         return response.json();
       })
     .then((data) => {
-      dispatch({type: ORDER_SUCCESS, payload: data});
-      dispatch({type: RESET_CART});
+      dispatch(orderSuccess(data));
+      dispatch(resetCart());
     })
     .catch((err) => {
-      dispatch({type: ORDER_FAILED});
-    }).finally(() => {
-      dispatch({type: HIDE_LOADER});
+      dispatch(orderFailed());
+    })
+    .finally(() => {
+      dispatch(hideLoader());
     });
   }
 }

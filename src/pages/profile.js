@@ -8,7 +8,7 @@ import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
 import { Paths } from '../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut, updateUser } from '../services/actions/user';
+import { makeSignOut, updateUser } from '../services/actions/user';
 
 const ProfilePage = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
@@ -50,7 +50,7 @@ const ProfilePage = () => {
 
   const signOutHandler = (evt) => {
     evt.preventDefault();
-    dispatch(signOut());
+    dispatch(makeSignOut());
   };
 
   return (

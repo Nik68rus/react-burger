@@ -1,6 +1,7 @@
+import { hideLoader, recoverySuccess, registrationSuccess, requestRecovery, showLoader, signIn, signOut } from ".";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookies";
 import { URL } from "../../utils/data";
-import { HIDE_LOADER, showNotification, SHOW_LOADER } from "./app";
+import { showNotification } from "./app";
 
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT'; 
@@ -11,7 +12,7 @@ export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 
 export const checkAuth = () => {
   return (dispatch) => {
-    dispatch({type: SHOW_LOADER});
+    dispatch(showLoader());
     fetch(`${URL}/auth/user`, {
       method: 'GET',
       mode: 'cors',
@@ -27,7 +28,7 @@ export const checkAuth = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          dispatch({type: SIGN_IN, payload: {...data.user, isAuthorized: true}});
+          dispatch(signIn(data.user));
         } else {
           dispatch(refreshToken());
         }
@@ -36,7 +37,7 @@ export const checkAuth = () => {
         dispatch(showNotification('Не удалось получить данные о пользователе!'));
       })
       .finally(() => {
-        dispatch({type: HIDE_LOADER});
+        dispatch(hideLoader());
       });
   }
 }
@@ -53,7 +54,7 @@ export const refreshToken = () => {
         body: JSON.stringify({token: refreshToken}),
       })
       .then(response => {
-        dispatch({type: HIDE_LOADER});
+        dispatch(hideLoader());
         if (!response.ok) {
           dispatch(showNotification('Не удалось получить данные о пользователе!'))
         }
@@ -78,7 +79,7 @@ export const refreshToken = () => {
   }
 }
 
-export const signIn = (data) => {
+export const makeSignIn = (data) => {
   return (dispatch) => {
     fetch(`${URL}/auth/login`, {
       method: 'POST',
@@ -105,16 +106,16 @@ export const signIn = (data) => {
         if (refreshToken) {
           setCookie('rtoken', refreshToken);
         }
-        dispatch({type: SIGN_IN, payload: {
+        dispatch(signIn({
           ...data.user,
-          password: data.password
-        }})
+          password: data.password,
+        }))
       }
     });
   }
 }
 
-export const signOut = () => {
+export const makeSignOut = () => {
   return (dispatch) => {
     fetch(`${URL}/auth/logout`, {
       method: 'POST',
@@ -135,13 +136,13 @@ export const signOut = () => {
       } else {
         deleteCookie('token');
         deleteCookie('rtoken');
-        dispatch({type: SIGN_OUT});
+        dispatch(signOut());
       }
     });
   }
 }
 
-export const requestRecovery = (mail) => {
+export const requestPasswordRecovery = (mail) => {
   return dispatch => {
     fetch(`${URL}/password-reset`, {
       method: 'POST',
@@ -160,7 +161,7 @@ export const requestRecovery = (mail) => {
       if (!data.success) {
         dispatch(showNotification(data.message))
       } else {
-        dispatch({type: REQUEST_RECOVERY})
+        dispatch(requestRecovery())
         dispatch(showNotification('На вашу почту отправлен код для восстановления пароля'))
       }
     });
@@ -188,7 +189,7 @@ export const resetPassword = (data) => {
         dispatch(showNotification(data.message))
       } else {
         dispatch(showNotification('Пароль успешно изменен!'))
-        dispatch({type: RECOVERY_SUCCESS})
+        dispatch(recoverySuccess())
       }
     });
 
@@ -216,7 +217,7 @@ export const registerUser = (data) => {
       } else {
         dispatch(showNotification('Регистрация прошла успешно. Вы можете войти под своими учетными данными!'))
         setTimeout(() => {
-          dispatch({type: REGISTRATION_SUCCESS})
+          dispatch(registrationSuccess())
         }, 1000);
       }
     });
@@ -243,7 +244,7 @@ export const updateUser = (data) => {
       if (!data.success) {
         dispatch(showNotification(data.message))
       } else {
-        dispatch(showNotification('Данные пользователя успешно обьновлены!'))
+        dispatch(showNotification('Данные пользователя успешно обновлены!'))
       }
     });
   }

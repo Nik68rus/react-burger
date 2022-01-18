@@ -6,7 +6,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { Paths } from '../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotification } from '../services/actions/app';
-import { signIn } from '../services/actions/user';
+import { makeSignIn } from '../services/actions/user';
 
 const LoginPage = () => {
   const isAuthorized = useSelector(store => store.user.isAuthorized);
@@ -28,7 +28,7 @@ const LoginPage = () => {
     if (form.email.trim() === '' || form.password.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))
     } else {
-      dispatch(signIn(form));
+      dispatch(makeSignIn(form));
     }
   }
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import Page404 from '../components/page-404/page-404';
-import { SET_INGREDIENT } from '../services/actions/ingredient';
+import { setIngredient } from '../services/actions';
 import Layout from './layout';
 
 const IngredientPage = () => {
@@ -13,7 +13,7 @@ const IngredientPage = () => {
 
   useEffect(() => {
     if (item) {
-      dispatch({type: SET_INGREDIENT, payload: {...item, modal: false}})
+      dispatch(setIngredient(item))
     }
   }, [item, dispatch]);
 

@@ -2,13 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
-import {useSelector, useDispatch} from 'react-redux';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import {useSelector} from 'react-redux';
 import { Loader } from '../loader/loader';
-import { REMOVE_INGREDIENT } from '../../services/actions/ingredient';
-import { useHistory } from 'react-router-dom';
-import { Paths } from '../../utils/data';
 
 const tabs = [{id: 'bun', title: 'Булки'}, {id: 'sauce', title: 'Соусы'},{id: 'main', title: 'Начинки'}];
 
@@ -17,15 +12,7 @@ const BurgerIngredients = () => {
   const [tabClick, setTabClick] = useState(false);
 
   const list = useSelector(store => store.ingredient.list);
-  const currentIngredient = useSelector(store => store.ingredient.currentIngredient);
   const isLoading = useSelector(store => store.ingredient.ingredientsRequest);
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const detailsHideHandler = () => {
-    dispatch({type: REMOVE_INGREDIENT});
-    history.replace({pathname: Paths.HOME});
-  }
 
   const tabClickHandler = (value) => {
     setTabClick(true);
@@ -112,12 +99,6 @@ const BurgerIngredients = () => {
           </div>
         }
       </section>      
-      {
-        currentIngredient.modal && 
-        <Modal onClose={detailsHideHandler} heading={'Детали ингредиента'}>
-          <IngredientDetails />
-        </Modal>
-      }
     </>
   );
 };

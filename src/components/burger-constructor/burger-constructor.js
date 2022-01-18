@@ -6,7 +6,7 @@ import {
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import {useDispatch, useSelector} from 'react-redux';
-import { ADD_TO_CART, SET_CART, makeOrder, ORDER_RESET } from '../../services/actions/ingredient';
+import { makeOrder } from '../../services/actions/ingredient';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Notification from '../notification/notification';
@@ -15,6 +15,7 @@ import { showNotification } from '../../services/actions/app';
 import BurgerPart from '../burger-part/burger-part';
 import { useHistory } from 'react-router-dom';
 import { Paths } from '../../utils/data';
+import { addToCart, orderReset, setCart } from '../../services/actions';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const BurgerConstructor = () => {
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(item) {
-      dispatch({type: ADD_TO_CART, payload: item})
+      dispatch(addToCart(item));
       if (item.type === 'bun' && cart.findIndex(item => item.type === 'bun') >= 0) {
         dispatch(showNotification('В бургере может быть только один вид булок! Мы обновили ваш выбор.'));
       }
@@ -61,13 +62,13 @@ const BurgerConstructor = () => {
   } 
 
   const orderCloseHandler = () => {
-    dispatch({type: ORDER_RESET});
+    dispatch(orderReset());
   };
 
   const partMoveHandler = (oldIndex, newIndex) => {
     const newCart = [...cart];
     [newCart[oldIndex], newCart[newIndex]] = [newCart[newIndex], newCart[oldIndex]];
-    dispatch({type: SET_CART, payload: newCart});
+    dispatch(setCart(newCart));
   }
 
   const findIndex = (ingredient) => cart.findIndex(item => item._id === ingredient._id);

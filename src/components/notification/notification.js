@@ -3,7 +3,7 @@ import styles from './notification.module.css';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { SET_MESSAGE } from '../../services/actions/app';
+import { setMessage } from '../../services/actions';
 
 const notificationRoot = document.getElementById("react-notification");
 
@@ -13,7 +13,7 @@ const Notification = () => {
   const dispatch = useDispatch();
 
   const notificationHideHandler = () => {
-    dispatch({type: SET_MESSAGE, payload: ''});
+    dispatch(setMessage(''));
   }
 
   return ReactDOM.createPortal(
