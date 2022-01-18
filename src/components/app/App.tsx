@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage} from '../../pages';
 import { getInredients } from '../../services/actions/ingredient';
 import { checkAuth } from '../../services/actions/user';
@@ -9,7 +9,6 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 
 function App() {
   const dispatch = useDispatch();
-  const history = useHistory();
   
   useEffect(() => {
     dispatch(getInredients());

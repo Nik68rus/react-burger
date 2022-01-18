@@ -20,7 +20,7 @@ const ForgotPasswordPage = () => {
     )
   };
 
-  const recoverClickHandler = (evt) => {
+  const formSubmitHandler = (evt) => {
     evt.preventDefault();
     if (mail.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))
@@ -40,7 +40,7 @@ const ForgotPasswordPage = () => {
       <section className={styles.login}>
         <div className={"mb-20 " + styles.form}>
           <h2 className={"text text_type_main-medium mb-6 " + styles.heading}>Восстановление пароля</h2>
-          <form className="mb-20">
+          <form className="mb-20" onSubmit={formSubmitHandler}>
             <Input 
               type={'email'} 
               name='mail'
@@ -48,7 +48,7 @@ const ForgotPasswordPage = () => {
               onChange={evt => setMail(evt.target.value)}
               placeholder={'Укажите e-mail'}
             />
-            <Button type="primary" size="medium" onClick={recoverClickHandler}>
+            <Button type="primary" size="medium">
               Восстановить
             </Button>
           </form>

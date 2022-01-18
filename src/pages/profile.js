@@ -100,7 +100,7 @@ const ProfilePage = () => {
               onBlur={() => setNameDisabled(true)}
               placeholder={'Имя'}
               icon={'EditIcon'}
-              value={form.name}
+              value={form.name || ''}
               onChange={formChangeHandler}
             />
             <Input
@@ -109,7 +109,7 @@ const ProfilePage = () => {
               disabled={mailDisabled}
               onIconClick={() => setMailDisabled(false)}
               onBlur={() => setMailDisabled(true)}
-              value={form.email}
+              value={form.email || ''}
               placeholder={'E-mail'}
               icon={'EditIcon'}
               onChange={formChangeHandler}
@@ -120,7 +120,7 @@ const ProfilePage = () => {
               disabled={passwordDisabled}
               onIconClick={() => setPasswordDisabled(false)}
               onBlur={() => setPasswordDisabled(true)}
-              value={form.password}
+              value={form.password || ''}
               onChange={formChangeHandler}
               placeholder={'Пароль'}
               icon={'EditIcon'}

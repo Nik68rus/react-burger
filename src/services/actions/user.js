@@ -26,7 +26,6 @@ export const checkAuth = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch({type: HIDE_LOADER});
         if (data.success) {
           dispatch({type: SIGN_IN, payload: {...data.user, isAuthorized: true}});
         } else {
@@ -34,8 +33,10 @@ export const checkAuth = () => {
         }
       })
       .catch((err) => {
-        dispatch({type: HIDE_LOADER});
         dispatch(showNotification('Не удалось получить данные о пользователе!'));
+      })
+      .finally(() => {
+        dispatch({type: HIDE_LOADER});
       });
   }
 }

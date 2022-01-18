@@ -65,23 +65,23 @@ export const makeOrder = (data) => {
       body: JSON.stringify(data),
     })
     .then((response) => {
-        dispatch({type: HIDE_LOADER});
-        if (!response.ok) {
-          dispatch({type: ORDER_FAILED});
-          dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже! (${response.status})`});
-          throw new Error(
-            `Что-то пошло не так, попробуйте позже! (${response.status})`
-            );
-          }
-          return response.json();
-        })
-        .then((data) => {
-        dispatch({type: ORDER_SUCCESS, payload: data});
-        dispatch({type: RESET_CART});
-      })
-      .catch((err) => {
-        dispatch({type: HIDE_LOADER});
+      if (!response.ok) {
         dispatch({type: ORDER_FAILED});
-      });
+        dispatch({type: SET_MESSAGE, payload: `Что-то пошло не так, попробуйте позже! (${response.status})`});
+        throw new Error(
+          `Что-то пошло не так, попробуйте позже! (${response.status})`
+          );
+        }
+        return response.json();
+      })
+    .then((data) => {
+      dispatch({type: ORDER_SUCCESS, payload: data});
+      dispatch({type: RESET_CART});
+    })
+    .catch((err) => {
+      dispatch({type: ORDER_FAILED});
+    }).finally(() => {
+      dispatch({type: HIDE_LOADER});
+    });
   }
 }
