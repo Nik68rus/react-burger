@@ -3,37 +3,34 @@ import {
   CurrencyIcon,
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './burger-constructor.module.css';
 import {useDispatch, useSelector} from 'react-redux';
-import { ADD_TO_CART, SET_CART, makeOrder, ORDER_RESET } from '../../services/actions/ingredient';
+import { makeOrder } from '../../services/actions/ingredient';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Notification from '../notification/notification';
 import { useDrop } from 'react-dnd';
-import { SET_MESSAGE } from '../../services/actions/app';
+import { showNotification } from '../../services/actions/app';
 import BurgerPart from '../burger-part/burger-part';
+import { useHistory } from 'react-router-dom';
+import { Paths } from '../../utils/data';
+import { addToCart, orderReset, setCart } from '../../services/actions';
 
 const BurgerConstructor = () => {
-  const [orderVisible, setOrderVisible] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
   const cart = useSelector(store => store.ingredient.cart);
   const order = useSelector(store => store.ingredient.order);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
   const notification = useSelector(store => store.app.message);
-
-  const showNotification = (message, duration = 3000) => {
-    dispatch({type: SET_MESSAGE, payload: message});
-    setTimeout(() => {
-      dispatch({type: SET_MESSAGE, payload: ''});
-    }, duration);
-  };
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(item) {
-      dispatch({type: ADD_TO_CART, payload: item})
+      dispatch(addToCart(item));
       if (item.type === 'bun' && cart.findIndex(item => item.type === 'bun') >= 0) {
-        showNotification('В бургере может быть только один вид булок! Мы обновили ваш выбор.');
+        dispatch(showNotification('В бургере может быть только один вид булок! Мы обновили ваш выбор.'));
       }
     }
   })
@@ -50,27 +47,28 @@ const BurgerConstructor = () => {
     const bunIndex = cart.findIndex(item => item.type === 'bun');
     const burgerInner = cart.filter(item => item.type !== 'bun');
 
-    if (bunIndex >= 0 && burgerInner.length > 0) {
+    if (bunIndex >= 0 && burgerInner.length > 0 && isAuthorized) {
       dispatch(makeOrder(data));
-      setOrderVisible(true);
     } 
+    if (!isAuthorized) {
+      history.replace({ pathname: Paths.LOGIN, state: { from: Paths.HOME } });
+    }
     if (bunIndex < 0) {
-      showNotification('Не бывает бургеров без булки! Выберите булку!');
+      dispatch(showNotification('Не бывает бургеров без булки! Выберите булку!'));
     }
     if (burgerInner.length === 0) {
-      showNotification('Вы забыли выбрать начинку!')
+      dispatch(showNotification('Вы забыли выбрать начинку!'))
     }
   } 
 
   const orderCloseHandler = () => {
-    setOrderVisible(false);
-    dispatch({type: ORDER_RESET});
+    dispatch(orderReset());
   };
 
   const partMoveHandler = (oldIndex, newIndex) => {
     const newCart = [...cart];
     [newCart[oldIndex], newCart[newIndex]] = [newCart[newIndex], newCart[oldIndex]];
-    dispatch({type: SET_CART, payload: newCart});
+    dispatch(setCart(newCart));
   }
 
   const findIndex = (ingredient) => cart.findIndex(item => item._id === ingredient._id);
@@ -78,17 +76,16 @@ const BurgerConstructor = () => {
   return (
     <>
       <section className={styles.constructor + ' pt-25'} ref={dropTarget}>
-        <div className={styles.top + ' ml-10 mb-4 pl-4'}>{bun &&<ConstructorElement type="top" isLocked={true} text={bun.name + ' (верх)'} price={bun.price} thumbnail={bun.image}/>}</div>
-        <ul className={styles.content + ' mb-4 custom-scroll pl-4 pr-1'} ref={partDropTarget}>
-          {
-            cart.map((el, i) => el.type === 'bun' ? null : <BurgerPart key={i} index={i} ingredient={el} onMove={partMoveHandler} findIndex={findIndex}/>)
-          }
-        </ul>
-        <div className={styles.bottom + ' ml-10 mb-10 pl-4'}>
-          {bun && <ConstructorElement type="bottom" isLocked={true} text={bun.name + ' (низ)'} price={bun.price} thumbnail={bun.image}/>}
-        </div>
-
-        {cart.length ? 
+        {cart.length === 0 ? <p className={"text text_type_main-medium " + styles.empty}>Перетащите ингридиенты<br/>в эту область</p> : <>
+          <div className={styles.top + ' ml-10 mb-4 pl-4'}>{bun &&<ConstructorElement type="top" isLocked={true} text={bun.name + ' (верх)'} price={bun.price} thumbnail={bun.image}/>}</div>
+          <ul className={styles.content + ' mb-4 custom-scroll pl-4 pr-1'} ref={partDropTarget}>
+            {
+              cart.map((el, i) => el.type === 'bun' ? null : <BurgerPart key={i} index={i} ingredient={el} onMove={partMoveHandler} findIndex={findIndex}/>)
+            }
+          </ul>
+          <div className={styles.bottom + ' ml-10 mb-10 pl-4'}>
+            {bun && <ConstructorElement type="bottom" isLocked={true} text={bun.name + ' (низ)'} price={bun.price} thumbnail={bun.image}/>}
+          </div>
           <div className={styles.summary}>
             <span className={styles.value + " text text_type_digits-medium mr-10"}>
               {totalAmount}
@@ -97,10 +94,10 @@ const BurgerConstructor = () => {
             <Button type="primary" size="large" className="ml-10" onClick={onOrder}>
               Оформить заказ
             </Button>
-          </div> : null
-        }
+          </div>
+        </>}
       </section>
-      {order.success && orderVisible && (
+      {order.success && (
         <Modal onClose={orderCloseHandler}>
           <OrderDetails id={order.order.number} />
         </Modal>

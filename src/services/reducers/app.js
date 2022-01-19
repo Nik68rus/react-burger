@@ -1,4 +1,4 @@
-import { SET_ERROR, SET_MESSAGE } from "../actions/app"
+import { SET_ERROR, SET_MESSAGE, SHOW_LOADER, HIDE_LOADER } from "../actions/app"
 
 const initialState = {
   error: false,
@@ -18,6 +18,18 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload,
+      }
+    }
+    case SHOW_LOADER: {
+      return {
+        ...state,
+        loader: true,
+      }
+    }
+    case HIDE_LOADER: {
+      return {
+        ...state,
+        loader: false,
       }
     }
     default: {

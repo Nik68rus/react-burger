@@ -1,7 +1,6 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 import {useDispatch} from 'react-redux';
-import { REMOVE_FROM_CART } from '../../services/actions/ingredient';
 import styles from './burger-part.module.css';
 import {
   ConstructorElement,
@@ -9,12 +8,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from 'react-dnd';
 import { itemPropTypes } from '../../utils/prop-types';
+import { removeFromCart } from '../../services/actions';
 
 const BurgerPart = ({index, ingredient, onMove, findIndex}) => {
   const dispatch = useDispatch();
 
   const ingredientRemoveHandler = (index) => {
-    dispatch({type: REMOVE_FROM_CART, payload: index});
+    dispatch(removeFromCart(index));
   };
 
   const [, drag] = useDrag(() => ({

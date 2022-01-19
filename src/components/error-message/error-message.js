@@ -3,9 +3,11 @@ import { PropTypes } from 'prop-types';
 
 const ErrorMessage = ({message}) => {
   return (
-    <p className="container text text_type_main-default mt-5">
-      {message}
-    </p>
+    <section className="container">
+      <p className="text text_type_main-default mt-5">
+        {message}
+      </p>
+    </section>
   );
 }
 
