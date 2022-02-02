@@ -1,21 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIngredient } from '../../services/actions';
+import { TItem } from '../../types';
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals")!;
 
-const Modal = ({onClose, heading, children}) => {
-  const {id} = useParams();
+interface IModal {
+  onClose: () => void;
+  heading?: string;
+};
+
+const Modal: FC<IModal> = ({onClose, heading, children}) => {
+  const {id} = useParams<{id: string}>();
   const dispatch = useDispatch();
-  const list = useSelector(store => store.ingredient.list);
-  const item = list.find(ing => ing._id === id);
-  const ingredientsLoaded = useSelector(store => store.ingredient.ingredientsLoaded);
+  const list = useSelector((store: any) => store.ingredient.list);
+  const item = list.find((ing: TItem) => ing._id === id);
+  const ingredientsLoaded = useSelector((store: any) => store.ingredient.ingredientsLoaded);
 
   useEffect(() => {
     if (ingredientsLoaded && item) {
@@ -47,15 +52,6 @@ const Modal = ({onClose, heading, children}) => {
       </div>
     </section>, modalRoot
   );
-}
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  heading: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired
 }
 
 export default Modal;

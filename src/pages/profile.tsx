@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Layout from './layout';
 import {
   Button,
@@ -14,7 +14,7 @@ const ProfilePage = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
   const [mailDisabled, setMailDisabled] = useState(true);
   const [passwordDisabled, setPasswordDisabled] = useState(true);
-  const { user } = useSelector((store) => store);
+  const { user } = useSelector((store: any) => store);
   const dispatch = useDispatch();
 
   const initialState = {
@@ -26,7 +26,7 @@ const ProfilePage = () => {
 
   const [form, setForm] = useState(initialState);
 
-  const formChangeHandler = (evt) => {
+  const formChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setForm((prevForm) => ({
       ...prevForm,
       [evt.target.name]: evt.target.value,
@@ -34,21 +34,20 @@ const ProfilePage = () => {
     }));
   };
 
-  const saveChangesHandler = (evt) => {
-    evt.preventDefault();
+  const saveChangesHandler = () => {
     dispatch(updateUser({ 
       name: form.name,
       email: form.email,
       password: form.password,
     }));
+    setForm(prevState => ({...prevState, isTouched: false}));
   };
 
-  const resetChangesHandler = (evt) => {
-    evt.preventDefault();
+  const resetChangesHandler = () => {
     setForm(initialState);
   };
 
-  const signOutHandler = (evt) => {
+  const signOutHandler = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     dispatch(makeSignOut());
   };

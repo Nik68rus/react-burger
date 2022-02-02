@@ -1,26 +1,30 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { itemPropTypes } from '../../utils/prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrag} from 'react-dnd';
 import {useHistory, useLocation, Link} from 'react-router-dom';
 import { Paths } from '../../utils/data';
 import { setIngredient } from '../../services/actions';
+import { TItem } from '../../types';
 
-const Ingredient = ({item}) => {
+interface IIngredient {
+  item: TItem;
+}
+
+const Ingredient: FC<IIngredient> = ({item}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
 
-  const cart = useSelector(store => store.ingredient.cart);
+  const cart = useSelector((store: any) => store.ingredient.cart);
 
   const [, ingRef] = useDrag({
     type: 'ingredient',
     item,
   });
 
-  let amount = cart.filter(cartItem => cartItem._id === item._id).length;
+  let amount = cart.filter((cartItem: TItem) => cartItem._id === item._id).length;
   amount = item.type === 'bun' && amount > 0 ? 2 : amount;
 
   const ingredientClickHandler = () => {
@@ -40,10 +44,6 @@ const Ingredient = ({item}) => {
       
     </Link>
   );
-}
-
-Ingredient.propTypes = {
-  item: itemPropTypes.isRequired,
 }
 
 export default Ingredient;

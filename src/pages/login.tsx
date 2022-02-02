@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import Layout from './layout';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
@@ -7,10 +7,11 @@ import { Paths } from '../utils/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotification } from '../services/actions/app';
 import { makeSignIn } from '../services/actions/user';
+import { History } from 'history';
 
 const LoginPage = () => {
-  const isAuthorized = useSelector(store => store.user.isAuthorized);
-  const history = useHistory();
+  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
+  const history = useHistory<History & {from: {pathname: string}}>();
 
   const [form, setForm] = useState({
     email: '',
@@ -19,11 +20,11 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
 
-  const formChangeHandler = (evt) => {
+  const formChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setForm(prevForm => ({...prevForm, [evt.target.name]: evt.target.value}));
   };
 
-  const submitHandler = (evt) => {
+  const submitHandler = (evt: FormEvent) => {
     evt.preventDefault();
     if (form.email.trim() === '' || form.password.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))

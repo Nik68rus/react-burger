@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './notification.module.css';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setMessage } from '../../services/actions';
 
-const notificationRoot = document.getElementById("react-notification");
+const notificationRoot = document.getElementById("react-notification")!;
 
-const Notification = () => {
-  const message = useSelector(store => store.app.message);
+interface INatification {
+  message: string;
+}
+
+const Notification: FC<INatification> = () => {
+  const message = useSelector((store: any) => store.app.message);
   const isActive = message.length > 0;
   const dispatch = useDispatch();
 

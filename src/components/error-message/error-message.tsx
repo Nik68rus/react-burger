@@ -1,7 +1,10 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, {FC} from 'react';
 
-const ErrorMessage = ({message}) => {
+interface IErrorMEssage {
+  message: string;
+}
+
+const ErrorMessage: FC<IErrorMEssage> = ({message}) => {
   return (
     <section className="container">
       <p className="text text_type_main-default mt-5">
@@ -9,10 +12,6 @@ const ErrorMessage = ({message}) => {
       </p>
     </section>
   );
-}
-
-ErrorMessage.propTypes = {
-  message: PropTypes.string.isRequired,
 }
 
 export default ErrorMessage;

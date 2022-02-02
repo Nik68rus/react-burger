@@ -20,11 +20,11 @@ const AppHeader = () => {
             to={Paths.HOME}
             activeClassName={styles.active}
           >
-            <BurgerIcon />
+            <BurgerIcon type='primary' />
             <span>Конструктор</span>
           </NavLink>
           <NavLink className={'p-5 mr-2 ' + styles.button} exact to={Paths.ORDERS} activeClassName={styles.active}>
-            <ListIcon />
+            <ListIcon type='primary' />
             <span>Лента заказов</span>
           </NavLink>
         </nav>
@@ -35,7 +35,7 @@ const AppHeader = () => {
         </div>
         <nav className={'text text_type_main-default ' + styles.usermenu}>
           <NavLink className={'p-5 ml-2 ' + styles.button} to={Paths.PROFILE} activeClassName={styles.active}>
-            <ProfileIcon />
+            <ProfileIcon type='primary' />
             <span>Личный кабинет</span>
           </NavLink>
         </nav>

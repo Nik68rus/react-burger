@@ -4,17 +4,18 @@ import styles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
 import {useSelector} from 'react-redux';
 import { Loader } from '../loader/loader';
+import { TItem, TItemType, TTab } from '../../types';
 
-const tabs = [{id: 'bun', title: 'Булки'}, {id: 'sauce', title: 'Соусы'},{id: 'main', title: 'Начинки'}];
+const tabs: Array<TTab> = [{id: 'bun', title: 'Булки'}, {id: 'sauce', title: 'Соусы'},{id: 'main', title: 'Начинки'}];
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState('bun');
-  const [tabClick, setTabClick] = useState(false);
+  const [current, setCurrent] = useState<string>('bun');
+  const [tabClick, setTabClick] = useState<boolean>(false);
 
-  const list = useSelector(store => store.ingredient.list);
-  const isLoading = useSelector(store => store.ingredient.ingredientsRequest);
+  const list = useSelector((store: any) => store.ingredient.list);
+  const isLoading = useSelector((store: any) => store.ingredient.ingredientsRequest);
 
-  const tabClickHandler = (value) => {
+  const tabClickHandler = (value: string) => {
     setTabClick(true);
     setCurrent(value);
     setTimeout(() => {
@@ -23,14 +24,14 @@ const BurgerIngredients = () => {
   };
 
   useEffect(() => {
-    const container = document.querySelector(`.${styles['tab-content']}`);
-    const controls = document.querySelector(`.${styles['tab-controls']}`);
-    const headings = container.querySelectorAll('h3');
+    const container = document.querySelector(`.${styles['tab-content']}`)!;
+    const controls = document.querySelector(`.${styles['tab-controls']}`)!;
+    const headings = container.querySelectorAll('h3')!;
     
     const border = controls.getBoundingClientRect().bottom;
     
     const scrollHandler = () => {
-      const distances = [];
+      const distances: number[] = [];
 
       headings.forEach((heading, i) => {
         const coords = heading.getBoundingClientRect();
@@ -56,15 +57,15 @@ const BurgerIngredients = () => {
   }, [list, tabClick]);
 
   useEffect(() => {
-    const target = document.querySelector(`#${current}`);
+    const target = document.querySelector(`#${current}`)!;
     target.scrollIntoView({behavior: 'smooth'});
 
   }, [current]);
   
-  const filteredList = {};
+  const filteredList: {[key in TItemType]: Array<TItem>} = {bun: [], sauce: [], main: []};
 
   tabs.forEach((tab) => {
-    filteredList[tab.id] = list.filter(item => item.type === tab.id);
+    filteredList[tab.id] = list.filter((item: TItem) => item.type === tab.id);
   });
 
   return (
