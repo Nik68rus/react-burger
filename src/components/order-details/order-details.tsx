@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './order-details.module.css';
 import tickImage from '../../images/tick.gif';
-import PropTypes from 'prop-types';
 
-const OrderDetails = ({id}) => {
+interface IOrderDetails {
+  id: number;
+}
+
+const OrderDetails: FC<IOrderDetails> = ({id}) => {
   return (
     <div className={styles["order-details"] + ' pt-20 pb-15 pl-15 pr-15'}>
       <h2 className="text text_type_digits-large mb-8">{id}</h2>
@@ -13,10 +16,6 @@ const OrderDetails = ({id}) => {
       <span className={styles['footer-text'] + " text text_type_main-default"}>Дождитесь готовности на орбитальной станции</span>
     </div>
   );
-}
-
-OrderDetails.propTypes = {
-  id: PropTypes.number.isRequired,
 }
 
 export default OrderDetails;

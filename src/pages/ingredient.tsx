@@ -4,11 +4,12 @@ import { useParams } from 'react-router-dom';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import Page404 from '../components/page-404/page-404';
 import { setIngredient } from '../services/actions';
+import { TItem } from '../types';
 import Layout from './layout';
 
 const IngredientPage = () => {
-  const {id} = useParams();
-  const item = useSelector(store => store.ingredient.list.find(ing => ing._id === id));
+  const {id} = useParams<{id: string}>();
+  const item = useSelector((store: any) => store.ingredient.list.find((ing: TItem) => ing._id === id));
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import Layout from './layout';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
@@ -16,7 +16,7 @@ const RegisterPage = () => {
   });
 
   const dispatch = useDispatch();
-  const {isAuthorized, justRegistered} = useSelector(store => store.user);
+  const {isAuthorized, justRegistered} = useSelector((store: any) => store.user);
 
   if (isAuthorized) {
     return (
@@ -30,7 +30,7 @@ const RegisterPage = () => {
     )
   };
 
-  const formSubmitHandler = (evt) => {
+  const formSubmitHandler = (evt: React.FormEvent) => {
     evt.preventDefault();
     if (form.name.trim() === '' || form.email.trim() === '' || form.password.trim() === '') {
       dispatch(showNotification('Заполните все поля формы'))
@@ -39,7 +39,7 @@ const RegisterPage = () => {
     }
   }
 
-  const formChangeHandler = (evt) => {
+  const formChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setForm(prevForm => ({...prevForm, [evt.target.name]: evt.target.value}))
   }
 

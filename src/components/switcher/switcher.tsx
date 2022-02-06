@@ -8,9 +8,18 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protected-route/protected-route';
 
+interface ILocation {
+  pathname: string;
+  state: {background: ILocation};
+  background: ILocation;
+  search: string;
+  hash: string;
+  key: string;
+}
+
 const Switcher = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   const history = useHistory();
   
   let background = location.state && location.state.background;

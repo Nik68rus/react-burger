@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
 import { Link, useHistory, Redirect } from 'react-router-dom';
@@ -11,9 +11,9 @@ const ResetPasswordPage = () => {
   const [form, setForm] = useState({password: '', code: ''});
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthorized = useSelector(store => store.user.isAuthorized);
-  const requested = useSelector(store => store.user.recoveryRequested);
-  const recoveryDone = useSelector(store => store.user.recoveryDone);
+  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
+  const requested = useSelector((store: any) => store.user.recoveryRequested);
+  const recoveryDone = useSelector((store: any) => store.user.recoveryDone);
 
   if (isAuthorized) {
     return (
@@ -34,11 +34,11 @@ const ResetPasswordPage = () => {
   };
 
 
-  const formChangeHandler = (evt) => {
+  const formChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
     setForm(prevForm => ({...prevForm, [evt.target.name]: evt.target.value}));
   };
 
-  const submitHandler = (evt) => {
+  const submitHandler = (evt: FormEvent) => {
     evt.preventDefault();
     if (form.password.trim() === '' || form.code.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))

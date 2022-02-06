@@ -1,5 +1,4 @@
-import React from 'react';
-import {PropTypes} from 'prop-types';
+import React, {FC} from 'react';
 import {useDispatch} from 'react-redux';
 import styles from './burger-part.module.css';
 import {
@@ -7,13 +6,20 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from 'react-dnd';
-import { itemPropTypes } from '../../utils/prop-types';
 import { removeFromCart } from '../../services/actions';
+import { TItem } from '../../types';
 
-const BurgerPart = ({index, ingredient, onMove, findIndex}) => {
+interface IBurgerPart {
+  index: number;
+  ingredient: TItem;
+  onMove: (oldIndex: number, newIndex: number) => void;
+  findIndex: (item: TItem) => number
+};
+
+const BurgerPart: FC<IBurgerPart> = ({index, ingredient, onMove, findIndex}) => {
   const dispatch = useDispatch();
 
-  const ingredientRemoveHandler = (index) => {
+  const ingredientRemoveHandler = (index: number) => {
     dispatch(removeFromCart(index));
   };
 
@@ -31,7 +37,7 @@ const BurgerPart = ({index, ingredient, onMove, findIndex}) => {
   const [, drop] = useDrop(() => ({
     accept: 'burger-part',
     canDrop: () => false,
-    hover(item, monitor) {
+    hover(item: TItem, monitor) {
       const dragIndex = findIndex(item);
       onMove(dragIndex, index);
     }
@@ -45,12 +51,5 @@ const BurgerPart = ({index, ingredient, onMove, findIndex}) => {
       <ConstructorElement text={ingredient.name} price={ingredient.price} thumbnail={ingredient.image} handleClose={() => {ingredientRemoveHandler(index)}}/>
     </li>  );
 }
-
-BurgerPart.propTypes = {
-  index: PropTypes.number.isRequired,
-  ingredient: itemPropTypes.isRequired,
-  onMove: PropTypes.func.isRequired,
-  findIndex: PropTypes.func.isRequired,
-};
 
 export default BurgerPart;

@@ -1,14 +1,20 @@
+import React, {FC} from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import {PropTypes} from 'prop-types';
 import { useEffect, useState } from 'react';
 import { checkAuth } from '../../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paths } from '../../utils/data';
 
-export const ProtectedRoute = ({ children, ...rest }) => {
+interface IProtectedRoute {
+  path: string;
+  exact?: boolean;
+  rest?: any;
+}
+
+export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   const [isUserLoaded, setUserLoaded] = useState(false);
   const dispatch = useDispatch();
-  const isAuthorized = useSelector(store => store.user.isAuthorized);
+  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -36,12 +42,4 @@ export const ProtectedRoute = ({ children, ...rest }) => {
       }
     />
   );
-}
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired,
-  rest: PropTypes.any,
 }
