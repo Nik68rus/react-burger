@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import { BrowserRouter as Router,} from 'react-router-dom';
 import { getInredients } from '../../services/actions/ingredient';
 import { checkAuth } from '../../services/actions/user';

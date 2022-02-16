@@ -4,7 +4,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './forms.module.css';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { Paths } from '../utils/data';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { showNotification } from '../services/actions/app';
 import { makeSignIn } from '../services/actions/user';
 import { History } from 'history';

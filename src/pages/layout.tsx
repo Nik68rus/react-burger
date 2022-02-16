@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../utils/hooks';
 import AppHeader from '../components/app-header/app-header';
 import ErrorMessage from '../components/error-message/error-message';
 import { Loader } from '../components/loader/loader';

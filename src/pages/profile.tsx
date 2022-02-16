@@ -7,7 +7,7 @@ import {
 import styles from './profile.module.css';
 import { NavLink } from 'react-router-dom';
 import { Paths } from '../utils/data';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { makeSignOut, updateUser } from '../services/actions/user';
 
 const ProfilePage = () => {

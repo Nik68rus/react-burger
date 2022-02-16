@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { checkAuth } from '../../services/actions/user';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Paths } from '../../utils/data';
 
 interface IProtectedRoute {

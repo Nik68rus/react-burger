@@ -1,12 +1,19 @@
+import type { TAppActions } from '../actions/app';
 import { SET_ERROR, SET_MESSAGE, SHOW_LOADER, HIDE_LOADER } from "../actions/app"
 
-const initialState = {
+type TAppState = {
+  error: boolean;
+  loader: boolean;
+  message: string;
+};
+
+const initialState: TAppState = {
   error: false,
   loader: false,
   message: '',
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: TAppActions) => {
   switch (action.type) {
     case SET_ERROR: {
       return {

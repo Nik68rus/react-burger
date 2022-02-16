@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from '../../utils/hooks';
 import {useDrag} from 'react-dnd';
 import {useHistory, useLocation, Link} from 'react-router-dom';
 import { Paths } from '../../utils/data';

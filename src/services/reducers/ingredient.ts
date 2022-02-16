@@ -1,3 +1,4 @@
+import type { TItem, TOrder } from './../../types/index';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -11,10 +12,28 @@ import {
   ORDER_REQUEST,
   ORDER_SUCCESS,
   ORDER_FAILED,
-  ORDER_RESET
+  ORDER_RESET,
 } from '../actions/ingredient';
 
-const initialState = {
+import type {
+  TIngredientActions
+} from '../actions/ingredient';
+
+type TIngridientState = {
+  list: ReadonlyArray<TItem>;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  ingredientsLoaded: boolean;
+
+  cart: ReadonlyArray<TItem>;
+  currentIngredient: TItem | {};
+
+  order: TOrder | {};
+  orderRequest: boolean;
+  orderFailed: boolean;
+}
+
+const initialState: TIngridientState = {
   list: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -28,7 +47,7 @@ const initialState = {
   orderFailed: false,
 };
 
-const ingredientReducer = (state = initialState, action) => {
+const ingredientReducer = (state = initialState, action: TIngredientActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_SUCCESS: {
       return {

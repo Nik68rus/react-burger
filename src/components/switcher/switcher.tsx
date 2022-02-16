@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
 import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage } from '../../pages';
 import { removeIngredient } from '../../services/actions';

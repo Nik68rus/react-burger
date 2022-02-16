@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './notification.module.css';
 import ReactDOM from 'react-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setMessage } from '../../services/actions';
 

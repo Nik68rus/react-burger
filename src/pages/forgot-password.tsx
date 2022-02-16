@@ -1,10 +1,10 @@
-import React, {FormEvent, ReactEventHandler, useState} from 'react';
+import React, {FormEvent, useState} from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
 import { Link, Redirect } from 'react-router-dom';
 import Layout from './layout';
 import { Paths } from '../utils/data';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { showNotification } from '../services/actions/app';
 import { requestPasswordRecovery } from '../services/actions/user';
 
