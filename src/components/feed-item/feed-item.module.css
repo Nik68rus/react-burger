@@ -1,0 +1,24 @@
+.feedItem {
+  background-color: #1c1c21;
+  border-radius: 40px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.price svg {
+  margin-left: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

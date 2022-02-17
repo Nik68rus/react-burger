@@ -48,6 +48,16 @@ export type TRegistrationData = {
   password: string;
 };
 
+export type TFeedItem = {
+  _id: string;
+  ingredients: string[];
+  status: "created" | "pending" | "done";
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  number: number;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 
 type TApplicationActions = TAppActions | TUserActions | TIngredientActions;

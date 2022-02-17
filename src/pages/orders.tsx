@@ -6,7 +6,7 @@ const OrdersPage = () => {
     <Layout>
       <section className="container mt-5">
         <p className="text text_type_main-default">
-          Лента заказов
+          История заказов
         </p> 
       </section>
     </Layout>

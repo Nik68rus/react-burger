@@ -1,13 +1,12 @@
 import React from 'react';
 import { useDispatch } from '../../utils/hooks';
 import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
-import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage, FeedPage } from '../../pages';
 import { removeIngredient } from '../../services/actions';
 import { Paths } from '../../utils/data';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protected-route/protected-route';
-
 interface ILocation {
   pathname: string;
   state: {background: ILocation};
@@ -53,6 +52,9 @@ const Switcher = () => {
         <ProtectedRoute path={Paths.ORDERS} exact={true}>
           <OrdersPage />
         </ProtectedRoute>
+        <Route path={Paths.FEED} exact={true}>
+          <FeedPage />
+        </Route>
         <Route path={`${Paths.INGREDIENTS}/:id`} exact={true}>
           <IngredientPage />
         </Route >

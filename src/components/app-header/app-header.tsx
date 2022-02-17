@@ -23,7 +23,7 @@ const AppHeader = () => {
             <BurgerIcon type='primary' />
             <span>Конструктор</span>
           </NavLink>
-          <NavLink className={'p-5 mr-2 ' + styles.button} exact to={Paths.ORDERS} activeClassName={styles.active}>
+          <NavLink className={'p-5 mr-2 ' + styles.button} exact to={Paths.FEED} activeClassName={styles.active}>
             <ListIcon type='primary' />
             <span>Лента заказов</span>
           </NavLink>

@@ -1,0 +1,23 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+}
+
+.orders {
+  width: calc(50% - 30px);
+  overflow: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.stats {
+  width: calc(50% - 30px);
+}
+
+.state {
+  display: flex;
+}
