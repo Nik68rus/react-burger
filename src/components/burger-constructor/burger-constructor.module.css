@@ -32,7 +32,7 @@
   flex-shrink: 0;
 }
 
-.summary svg {
+.value svg {
   margin-left: calc(var(--offset-base-size) * 4);
   width: 33px;
   height: 33px;
@@ -43,6 +43,11 @@
   align-items: center;
 }
 
+.summary button {
+  min-width: 215px;
+  min-height: 64px;
+}
+
 .empty {
   height: 100%;
   display: flex;
@@ -50,4 +55,9 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.locked {
+  pointer-events: none;
+  opacity: 0.6;
 }

@@ -1,17 +1,17 @@
+import { unlockConstructor } from './index';
 import { getCookie } from '../../utils/cookies';
 import { URL } from '../../utils/data';
 import {
   getIngredientsFailed,
   getIngredientsRequest,
   getIngredientsSuccess,
-  hideLoader,
+  lockConstructor,
   orderFailed,
   orderRequest,
   orderSuccess,
   resetCart,
   setError,
   setMessage,
-  showLoader,
 } from '.';
 
 import { showNotification } from './app';
@@ -147,7 +147,7 @@ export const makeOrder: AppThunk = (data: TOrder) => {
     dispatch(
       showNotification('Мы обрабатываем ваш заказ. Пожалуйста подождите!')
     );
-    dispatch(showLoader());
+    dispatch(lockConstructor());
     fetch(`${URL}/orders`, {
       method: 'POST',
       mode: 'cors',
@@ -181,7 +181,7 @@ export const makeOrder: AppThunk = (data: TOrder) => {
         dispatch(orderFailed());
       })
       .finally(() => {
-        dispatch(hideLoader());
+        dispatch(unlockConstructor());
       });
   };
 };

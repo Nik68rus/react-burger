@@ -37,7 +37,7 @@ const Ingredient: FC<IIngredient> = ({item}) => {
       {(amount > 0) && <Counter count={amount} size="default" />}
       <img src={item.image} alt={item.name} />
       <div className={styles.price + ' text text_type_digits-default mt-1 mb-1'}>
-        {item.price}
+        {item.price.toLocaleString('ru-RU')}
         <CurrencyIcon type="primary" />
       </div>
       <h4 className="text text_type_main-default">{item.name}</h4>

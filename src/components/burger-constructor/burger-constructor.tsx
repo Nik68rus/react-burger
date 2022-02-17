@@ -17,14 +17,14 @@ import { useHistory } from 'react-router-dom';
 import { Paths } from '../../utils/data';
 import { addToCart, orderReset, setCart } from '../../services/actions';
 import { TItem } from '../../types';
+import { Loader } from '../loader/loader';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const cart = useSelector((store: any) => store.ingredient.cart);
-  const order = useSelector((store: any) => store.ingredient.order);
+  const {cart, order} = useSelector((store: any) => store.ingredient);
   const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
-  const notification = useSelector((store: any) => store.app.message);
+  const {message: notification, locked} = useSelector((store: any) => store.app);
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -73,10 +73,11 @@ const BurgerConstructor = () => {
   }
 
   const findIndex = (ingredient: TItem) => cart.findIndex((item: TItem) => item._id === ingredient._id);
+  const lockStyle = locked ? styles.locked : '';
 
   return (
     <>
-      <section className={styles.constructor + ' pt-25'} ref={dropTarget}>
+      <section className={styles.constructor + ' pt-25 ' + lockStyle} ref={dropTarget}>
         {cart.length === 0 ? <p className={"text text_type_main-medium " + styles.empty}>Перетащите ингридиенты<br/>в эту область</p> : <>
           <div className={styles.top + ' ml-10 mb-4 pl-4'}>{bun &&<ConstructorElement type="top" isLocked={true} text={bun.name + ' (верх)'} price={bun.price} thumbnail={bun.image}/>}</div>
           <ul className={styles.content + ' mb-4 custom-scroll pl-4 pr-1'} ref={partDropTarget}>
@@ -89,11 +90,11 @@ const BurgerConstructor = () => {
           </div>
           <div className={styles.summary}>
             <span className={styles.value + " text text_type_digits-medium mr-10"}>
-              {totalAmount}
+              {totalAmount.toLocaleString('ru-RU')}
               <CurrencyIcon type="primary" />
             </span>
             <Button type="primary" size="large" onClick={onOrder}>
-              Оформить заказ
+              {locked ? <Loader size='small' inverse/> : 'Оформить заказ'}
             </Button>
           </div>
         </>}

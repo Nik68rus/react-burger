@@ -5,11 +5,15 @@ import {
   SET_MESSAGE,
   SHOW_LOADER,
   HIDE_LOADER,
+  LOCK_CONSTRUCTOR,
+  UNLOCK_CONSTRUCTOR,
 } from './app';
 
 import type {
   IShowLoaderAction,
   IHideLoaderAction,
+  IUnlockConstructorAction,
+  ILockConstructorAction,
   ISetErrorAction,
   ISetMessageAction,
 } from './app';
@@ -71,6 +75,18 @@ export const showLoader = (): IShowLoaderAction => {
 export const hideLoader = (): IHideLoaderAction => {
   return {
     type: HIDE_LOADER,
+  };
+};
+
+export const lockConstructor = (): ILockConstructorAction => {
+  return {
+    type: LOCK_CONSTRUCTOR,
+  };
+};
+
+export const unlockConstructor = (): IUnlockConstructorAction => {
+  return {
+    type: UNLOCK_CONSTRUCTOR,
   };
 };
 

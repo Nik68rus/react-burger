@@ -1,11 +1,14 @@
+import { AppDispatchActions, RootState } from './../../types/index';
+import type { TApplicationActions } from "../../types";
 import { getCookie } from "../../utils/cookies";
+import {Middleware, MiddlewareAPI} from 'redux';
 
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return store => {
-    let socket = null;
-    let authSocket = null;
+export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+  return (store: MiddlewareAPI<AppDispatchActions, RootState>) => {
+    let socket: WebSocket | null = null;
+    let authSocket: WebSocket | null = null;
 
-    return next => action => {
+    return next => (action: TApplicationActions) => {
       const { dispatch, getState } = store;
       const { type } = action;
       const { wsInit, onOpen, onClose, onError, onMessage, wsAuthInit, onAuthOpen, onAuthClose, onAuthError, onAuthMessage } = wsActions;
@@ -63,7 +66,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           dispatch({ type: onAuthClose, payload: event });
         };
       }
-
 
       next(action);
     };

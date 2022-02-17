@@ -1,4 +1,5 @@
 .ingredient {
+  display: block;
   text-align: center;
   position: relative;
   text-decoration: none;

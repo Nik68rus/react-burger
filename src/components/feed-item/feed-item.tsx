@@ -31,9 +31,7 @@ const FeedItem: FC<IFeedItem> = ({ order }) => {
       if (curIng) {
         pictures.push(curIng.image);
       }
-    });
-    console.log(pictures);
-    
+    });    
     return pictures;
   }
 
@@ -48,7 +46,7 @@ const FeedItem: FC<IFeedItem> = ({ order }) => {
       <h3 className="text text_type_main-medium mb-6">{order.name}</h3>
       <div className={styles.footer}>
         <Ingredients list={getPictures(order.ingredients)} />
-        <div className={styles.price + " text text_type_digits-default"}>{getPrice(order.ingredients)} <CurrencyIcon type='primary'/></div>
+        <div className={styles.price + " text text_type_digits-default"}>{getPrice(order.ingredients).toLocaleString('ru-RU')} <CurrencyIcon type='primary'/></div>
       </div>
     </article>
   );

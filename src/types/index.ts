@@ -60,11 +60,12 @@ export type TFeedItem = {
 
 export type RootState = ReturnType<typeof store.getState>;
 
-type TApplicationActions = TAppActions | TUserActions | TIngredientActions;
+export type TApplicationActions = TAppActions | TUserActions | TIngredientActions;
 
 
 export type AppThunk<ReturnType = void> = ActionCreator<
 ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
 
-export type AppDispatch = typeof store.dispatch | AppThunk;
+export type AppDispatchActions = typeof store.dispatch;
+export type AppDispatch = AppDispatchActions | AppThunk;
