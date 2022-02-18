@@ -7,6 +7,7 @@ import RegisterPage from './register';
 import ResetPasswordPage from './reset-password';
 import NotFoundPage from './not-found';
 import OrdersPage from './orders';
+import OrderPage from './order';
 import FeedPage from './feed';
 
-export {HomePage, IngredientPage, ForgotPasswordPage, LoginPage, ProfilePage, RegisterPage, ResetPasswordPage, NotFoundPage, OrdersPage, FeedPage};
+export {HomePage, IngredientPage, ForgotPasswordPage, LoginPage, ProfilePage, RegisterPage, ResetPasswordPage, NotFoundPage, OrdersPage, FeedPage, OrderPage};

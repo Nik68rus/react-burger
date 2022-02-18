@@ -4,6 +4,9 @@ import { TFeedItem } from '../../types';
 import styles from './feed-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
+import {Link} from 'react-router-dom';
+import { Paths } from '../../utils/data';
+import { formatDate } from '../../utils/date';
 
 interface IFeedItem {
   order: TFeedItem;
@@ -37,17 +40,19 @@ const FeedItem: FC<IFeedItem> = ({ order }) => {
 
   return (
     <article className={styles.feedItem + ' p-6 mb-6'}>
-      <div className={styles.header + ' mb-6'}>
-        <span className="text text_type_digits-default">#{order.number}</span>
-        <span className="text text_type_main-default">
-          {date.toLocaleString()}
-        </span>
-      </div>
-      <h3 className="text text_type_main-medium mb-6">{order.name}</h3>
-      <div className={styles.footer}>
-        <Ingredients list={getPictures(order.ingredients)} />
-        <div className={styles.price + " text text_type_digits-default"}>{getPrice(order.ingredients).toLocaleString('ru-RU')} <CurrencyIcon type='primary'/></div>
-      </div>
+      <Link to={`${Paths.FEED}/${order._id}`}>
+        <div className={styles.header + ' mb-6'}>
+          <span className="text text_type_digits-default">#{order.number}</span>
+          <span className={styles.date + " text text_type_main-default"}>
+            {formatDate(date)}
+          </span>
+        </div>
+        <h3 className="text text_type_main-medium mb-6">{order.name}</h3>
+        <div className={styles.footer}>
+          <Ingredients list={getPictures(order.ingredients)} />
+          <div className={styles.price + " text text_type_digits-default"}>{getPrice(order.ingredients).toLocaleString('ru-RU')} <CurrencyIcon type='primary'/></div>
+        </div>
+      </Link>
     </article>
   );
 };

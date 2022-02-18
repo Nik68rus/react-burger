@@ -10,7 +10,7 @@ const Ingredients: FC<IIngredients> = ({list}) => {
   if (list.length <= 6) {
     listContent = list.map((item, i) => {
       return (
-        <li className={styles.item} style={{zIndex: 6-i}}>
+        <li className={styles.item} style={{zIndex: 6-i}} key={i}>
           <img src={item} alt="Ингредиент бургера" />
         </li>
       )
@@ -18,10 +18,10 @@ const Ingredients: FC<IIngredients> = ({list}) => {
   } else {
     listContent = list.slice(0, 6).map((item, i) => {
       return (
-        i === 5 ?  <li className={styles.item + " " + styles.withextra} style={{zIndex: 6-i}}>
+        i === 5 ?  <li className={styles.item + " " + styles.withextra} style={{zIndex: 6-i}} key={i}>
         <img src={item} alt="Ингредиент бургера" />
         <span className={styles.extra + " text text_type_main-default"}>+{list.length - 5}</span>
-      </li> : <li className={styles.item} style={{zIndex: 6-i}}>
+      </li> : <li className={styles.item} style={{zIndex: 6-i}} key={i}>
           <img src={item} alt="Ингредиент бургера" />
         </li>
       )

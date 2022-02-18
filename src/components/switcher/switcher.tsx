@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from '../../utils/hooks';
 import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
-import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage, FeedPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage, FeedPage, OrderPage } from '../../pages';
 import { removeIngredient } from '../../services/actions';
 import { Paths } from '../../utils/data';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -46,14 +46,17 @@ const Switcher = () => {
         <Route path={Paths.RESET} exact={true}>
           <ResetPasswordPage />
         </Route>
-        <ProtectedRoute path={Paths.PROFILE} exact={true}>
+        <ProtectedRoute path={Paths.PROFILE} >
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute path={Paths.ORDERS} exact={true}>
-          <OrdersPage />
-        </ProtectedRoute>
+        {/* <ProtectedRoute path={Paths.ORDERS} exact={true}>
+          <ProfilePage />
+        </ProtectedRoute> */}
         <Route path={Paths.FEED} exact={true}>
           <FeedPage />
+        </Route>
+        <Route path={`${Paths.FEED}/:id`} exact={true}>
+          <OrderPage />
         </Route>
         <Route path={`${Paths.INGREDIENTS}/:id`} exact={true}>
           <IngredientPage />
@@ -67,7 +70,9 @@ const Switcher = () => {
           <Modal onClose={detailsHideHandler} heading={'Детали ингредиента'}>
             <IngredientDetails />
           </Modal>
-        </Route>}
+        </Route>
+      
+      }
 
     </div>
   );

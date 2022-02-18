@@ -14,14 +14,14 @@ type TWSState = {
   wsConnected: boolean;
   wsAuthConnected: boolean;
   feed: any;
-  history: any;
+  orderHistory: any;
 };
 
 const initialState: TWSState = {
   wsConnected: false,
   wsAuthConnected: false,
   feed: {},
-  history: {},
+  orderHistory: {},
 };
 
 const wsReducer = (state = initialState, action: TWSActions) => {
@@ -72,7 +72,7 @@ const wsReducer = (state = initialState, action: TWSActions) => {
     case WS_GET_AUTH_MESSAGE:
       return {
         ...state,
-        history: action.payload,
+        orderHistory: action.payload,
       };
 
     default:

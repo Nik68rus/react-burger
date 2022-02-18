@@ -1,6 +1,16 @@
 .feedItem {
   background-color: #1c1c21;
   border-radius: 40px;
+  transition: background-color .3s ease;
+}
+
+.feedItem:hover {
+  background-color: #28282f;
+}
+
+.feedItem a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .header {
@@ -21,4 +31,8 @@
 .footer {
   display: flex;
   justify-content: space-between;
+}
+
+.date {
+  color: #8585AD;
 }

@@ -5,17 +5,23 @@ import {
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Paths } from '../utils/data';
 import { useDispatch, useSelector } from '../utils/hooks';
 import { makeSignOut, updateUser } from '../services/actions/user';
+import FeedItem from '../components/feed-item/feed-item';
+import { TFeedItem } from '../types';
 
 const ProfilePage = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
   const [mailDisabled, setMailDisabled] = useState(true);
   const [passwordDisabled, setPasswordDisabled] = useState(true);
-  const { user } = useSelector((store: any) => store);
+  const { user } = useSelector(store => store);
+  const {orders} = useSelector(store => store.ws.orderHistory);
   const dispatch = useDispatch();
+  const match = useRouteMatch(Paths.ORDERS);
+
+  const sortedOrders =orders && orders.length && orders.sort((a:TFeedItem, b: TFeedItem) => +new Date(b.createdAt) - +new Date(a.createdAt));
 
   const initialState = {
     name: user.name,
@@ -86,10 +92,11 @@ const ProfilePage = () => {
               styles.description + ' mt-20 text text_type_main-default'
             }
           >
-            В этом разделе вы можете изменить свои персональные данные
+            {!match && 'В этом разделе вы можете изменить свои персональные данные'}
+            {match && 'В этом разделе вы можете просмотреть свою историю заказов'}
           </p>
         </div>
-        <div className={styles.form}>
+        {!match && <div className={styles.form}>
           <form className="mb-20">
             <Input
               type={'text'}
@@ -139,7 +146,12 @@ const ProfilePage = () => {
               </Button>
             </div>
           )}
-        </div>
+        </div>}
+        {match && 
+          <div className={styles.orders + " custom-scroll pr-4"}>
+            {sortedOrders.map((order: TFeedItem) => <FeedItem key={order._id} order={order} />)}
+          </div>
+        }
       </section>
     </Layout>
   );

@@ -1,0 +1,36 @@
+.order {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.number {
+  text-align: center;
+}
+
+.status {
+  color: #00cccc;
+}
+
+.content {
+  max-height: 320px;
+  overflow: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+}
+
+.date {
+  color: #8585AD;
+}
+
+.total svg {
+  margin-left: 12px;
+}
