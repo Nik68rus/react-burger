@@ -14,4 +14,10 @@ const Paths = {
   FEED: '/feed'
 }
 
-export {URL, WS_URL, Paths};
+const Status = {
+  done: 'Выполнен',
+  created: 'Создан',
+  pending: 'Готовится',
+};
+
+export {URL, WS_URL, Paths, Status};

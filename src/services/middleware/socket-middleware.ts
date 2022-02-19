@@ -9,11 +9,16 @@ export const socketMiddleware = (wsActions: any): Middleware => {
     return next => (action: TApplicationActions) => {
       const { dispatch } = store;
       const { type } = action;
-      const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
+      const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsInit) {
         //@ts-ignore
         socket = new WebSocket(action.payload);
+      }
+
+      if (socket && type === wsClose) {
+        socket.close();
+        console.log('closed');
       }
 
       if (socket) {
@@ -34,6 +39,7 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         };
 
         socket.onclose = event => {
+          socket = null;
           dispatch({ type: onClose, payload: event });
         };
       }

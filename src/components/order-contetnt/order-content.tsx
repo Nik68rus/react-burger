@@ -2,16 +2,11 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { TFeedItem, TItem } from '../../types';
+import { Status } from '../../utils/data';
 import { formatDate } from '../../utils/date';
 import { useSelector } from '../../utils/hooks';
 import OrderIngredient from '../order-ingredient/order-ingredient';
 import styles from './order-content.module.css';
-
-const Status = {
-  done: 'Выполнен',
-  created: 'Создан',
-  pending: 'Готовится',
-};
 
 const OrderContent = () => {
   const {id} = useParams<{id: string}>();

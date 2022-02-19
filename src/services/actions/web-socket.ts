@@ -1,4 +1,6 @@
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
+export const WS_CONNECTION_CLOSE: 'WS_CONNECTION_CLOSE' = 'WS_CONNECTION_CLOSE';
+
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' =
 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
@@ -7,6 +9,8 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' =
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 
 export const WS_CONNECTION_AUTH_START: 'WS_CONNECTION_AUTH_START' = 'WS_CONNECTION_AUTH_START';
+export const WS_CONNECTION_AUTH_CLOSE: 'WS_CONNECTION_AUTH_CLOSE' = 'WS_CONNECTION_AUTH_CLOSE';
+
 export const WS_CONNECTION_AUTH_SUCCESS: 'WS_CONNECTION_AUTH_SUCCESS' =
 'WS_CONNECTION_AUTH_SUCCESS';
 export const WS_CONNECTION_AUTH_ERROR: 'WS_CONNECTION_AUTH_ERROR' = 'WS_CONNECTION_AUTH_ERROR';
@@ -17,6 +21,10 @@ export const WS_GET_AUTH_MESSAGE: 'WS_GET_AUTH_MESSAGE' = 'WS_GET_AUTH_MESSAGE';
 interface IWSConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
   readonly payload: string;
+}
+
+interface IWSConnectionCloseAction {
+  readonly type: typeof WS_CONNECTION_CLOSE;
 }
 
 interface IWSConnectionSuccessAction {
@@ -41,6 +49,10 @@ interface IWSConnectionAuthStartAction {
   readonly payload: string;
 }
 
+interface IWSConnectionAuthCloseAction {
+  readonly type: typeof WS_CONNECTION_AUTH_CLOSE;
+}
+
 interface IWSConnectionAuthSuccessAction {
   readonly type: typeof WS_CONNECTION_AUTH_SUCCESS;
 }
@@ -62,6 +74,12 @@ export const wsConnectionStart = (url: string): IWSConnectionStartAction => {
   return {
     type: WS_CONNECTION_START,
     payload: url,
+  };
+};
+
+export const wsConnectionClose = (): IWSConnectionCloseAction => {  
+  return {
+    type: WS_CONNECTION_CLOSE,
   };
 };
 
@@ -97,6 +115,12 @@ export const wsConnectionAuthStart = (url: string): IWSConnectionAuthStartAction
   };
 };
 
+export const wsConnectionAuthClose = (): IWSConnectionAuthCloseAction => {  
+  return {
+    type: WS_CONNECTION_AUTH_CLOSE,
+  };
+};
+
 export const wsConnectionAuthSuccess = (): IWSConnectionAuthSuccessAction => {
   return {
     type: WS_CONNECTION_AUTH_SUCCESS,
@@ -124,6 +148,7 @@ export const wsGetAuthMessage = (message: any): IWSGetAuthMessageAction => {
 
 export type TWSActions =
   | IWSConnectionStartAction
+  | IWSConnectionCloseAction
   | IWSConnectionSuccessAction
   | IWSConnectionClosedAction
   | IWSConnectionErrorAction

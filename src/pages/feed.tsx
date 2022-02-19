@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Layout from './layout';
 import styles from './feed.module.css';
-import { useSelector } from '../utils/hooks';
+import { useDispatch, useSelector } from '../utils/hooks';
 import FeedItem from '../components/feed-item/feed-item';
 import { TFeedItem } from '../types';
 import OrderList from '../components/order-list/order-list';
 import Figure from '../components/figure/figure';
+import { wsConnectionClose, wsConnectionStart } from '../services/actions/web-socket';
+import { WS_URL } from '../utils/data';
 
 const FeedPage = () => {
   const {orders, total, totalToday} = useSelector(store => store.ws.feed);
 
   const ordersDone = orders ? orders.filter((order: TFeedItem) => order.status === 'done').map((order: TFeedItem) => order.number).slice(0, 5) : [];
   const ordersInProgress = orders ? orders.filter((order: TFeedItem) => order.status === 'created' || order.status === 'pending').map((order: TFeedItem) => order.number) : [];
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(wsConnectionStart(`${WS_URL}/all`));
+    return () => {
+      dispatch(wsConnectionClose());
+    }
+  }, [dispatch]);
+
   return (
     <Layout>
       <section className={styles.feed + " wrapper container mt-10"}>

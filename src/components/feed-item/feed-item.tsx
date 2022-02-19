@@ -7,12 +7,14 @@ import Ingredients from '../ingredients/ingredients';
 import {Link, useLocation} from 'react-router-dom';
 // import { Paths } from '../../utils/data';
 import { formatDate } from '../../utils/date';
+import { Status } from '../../utils/data';
 
 interface IFeedItem {
   order: TFeedItem;
+  showStatus? : boolean;
 }
 
-const FeedItem: FC<IFeedItem> = ({ order }) => {
+const FeedItem: FC<IFeedItem> = ({ order, showStatus }) => {
   const date = new Date(order.createdAt);
   const { list } = useSelector((store) => store.ingredient);
   const location = useLocation();
@@ -50,8 +52,9 @@ const FeedItem: FC<IFeedItem> = ({ order }) => {
             {formatDate(date)}
           </span>
         </div>
-        <h3 className="text text_type_main-medium mb-6">{order.name}</h3>
-        <div className={styles.footer}>
+        <h3 className="text text_type_main-medium mb-2">{order.name}</h3>
+        {showStatus && <div className="text text_type_main-default">{Status[order.status]}</div>}
+        <div className={styles.footer + " mt-6"}>
           <Ingredients list={getPictures(order.ingredients)} />
           <div className={styles.price + " text text_type_digits-default"}>{getPrice(order.ingredients).toLocaleString('ru-RU')} <CurrencyIcon type='primary'/></div>
         </div>

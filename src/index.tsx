@@ -9,10 +9,12 @@ import thunk from 'redux-thunk';
 import {rootReducer} from './services/reducers';
 
 import {
+  WS_CONNECTION_AUTH_CLOSE,
   WS_CONNECTION_AUTH_CLOSED,
   WS_CONNECTION_AUTH_ERROR,
   WS_CONNECTION_AUTH_START,
   WS_CONNECTION_AUTH_SUCCESS,
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
@@ -22,7 +24,6 @@ import {
 } from './services/actions/web-socket';
 
 import { socketMiddleware } from './services/middleware';
-// import { WS_URL } from './utils/data';
 
 declare global {
   interface Window {
@@ -41,6 +42,7 @@ const composeEnhancers =
       onClose: WS_CONNECTION_CLOSED,
       onError: WS_CONNECTION_ERROR,
       onMessage: WS_GET_MESSAGE,
+      wsClose: WS_CONNECTION_CLOSE,
     };
 
     
@@ -50,6 +52,7 @@ const composeEnhancers =
       onClose: WS_CONNECTION_AUTH_CLOSED,
       onError: WS_CONNECTION_AUTH_ERROR,
       onMessage: WS_GET_AUTH_MESSAGE,
+      wsClose: WS_CONNECTION_AUTH_CLOSE,
     };
 
 const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions), socketMiddleware(wsAuthActions)));
