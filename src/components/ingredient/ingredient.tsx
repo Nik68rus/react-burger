@@ -33,7 +33,7 @@ const Ingredient: FC<IIngredient> = ({item}) => {
   }
 
   return (
-    <Link to={{pathname: `${Paths.INGREDIENTS}/${item._id}`, state: {background: location}}} className={styles.ingredient + ' pl-4 pr-4'} onClick={ingredientClickHandler} ref={ingRef}>
+    <Link to={{pathname: `${Paths.INGREDIENTS}/${item._id}`, state: {background: location, modal: 'ingredient'}}} className={styles.ingredient + ' pl-4 pr-4'} onClick={ingredientClickHandler} ref={ingRef}>
       {(amount > 0) && <Counter count={amount} size="default" />}
       <img src={item.image} alt={item.name} />
       <div className={styles.price + ' text text_type_digits-default mt-1 mb-1'}>

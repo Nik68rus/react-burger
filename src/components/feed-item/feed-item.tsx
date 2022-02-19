@@ -4,8 +4,8 @@ import { TFeedItem } from '../../types';
 import styles from './feed-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from '../ingredients/ingredients';
-import {Link} from 'react-router-dom';
-import { Paths } from '../../utils/data';
+import {Link, useLocation} from 'react-router-dom';
+// import { Paths } from '../../utils/data';
 import { formatDate } from '../../utils/date';
 
 interface IFeedItem {
@@ -15,6 +15,9 @@ interface IFeedItem {
 const FeedItem: FC<IFeedItem> = ({ order }) => {
   const date = new Date(order.createdAt);
   const { list } = useSelector((store) => store.ingredient);
+  const location = useLocation();
+
+  
 
   const getPrice = (burger: string[]) => {
     return burger.reduce((acc: number, id: string) => {
@@ -40,7 +43,7 @@ const FeedItem: FC<IFeedItem> = ({ order }) => {
 
   return (
     <article className={styles.feedItem + ' p-6 mb-6'}>
-      <Link to={`${Paths.FEED}/${order._id}`}>
+      <Link to={{pathname: `${location.pathname}/${order._id}`, state: {background: location, modal: 'order', from: location.pathname}}}>
         <div className={styles.header + ' mb-6'}>
           <span className="text text_type_digits-default">#{order.number}</span>
           <span className={styles.date + " text text_type_main-default"}>

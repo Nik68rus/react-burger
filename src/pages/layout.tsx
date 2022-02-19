@@ -17,8 +17,9 @@ const Layout: FC = ({children}) => {
           {
             error ? 
               <ErrorMessage message={message} /> 
-              : loader ? 
+              : loader ? <div className="mt-20">
                 <Loader size='large' /> 
+              </div>
                 : children
           }
         </main>

@@ -1,20 +1,11 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, {FC} from 'react';
-import { TItem } from '../../types';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { TFeedItem, TItem } from '../../types';
 import { formatDate } from '../../utils/date';
 import { useSelector } from '../../utils/hooks';
 import OrderIngredient from '../order-ingredient/order-ingredient';
 import styles from './order-content.module.css';
-
-interface IOrderContent {
-  _id: string;
-  ingredients: string[];
-  status: "created" | "pending" | "done";
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  number: number;
-};
 
 const Status = {
   done: 'Выполнен',
@@ -22,8 +13,29 @@ const Status = {
   pending: 'Готовится',
 };
 
-const OrderContent: FC<IOrderContent> = ({_id, ingredients, status, name, createdAt, number}) => {
+const OrderContent = () => {
+  const {id} = useParams<{id: string}>();
+  const {orders} = useSelector(store => store.ws.feed);
+  const {orders: orderHistory} = useSelector(store => store.ws.orderHistory);  
   const {list} = useSelector(store => store.ingredient);
+  
+  let allOrders = [];
+
+  if (orders && orders.length) {
+    allOrders = orders.concat(orderHistory);
+  }
+
+  if (orderHistory && orderHistory.length) {
+    allOrders = orders.concat(orderHistory);
+  }
+
+  const item: TFeedItem = allOrders.find((order: TFeedItem) => order._id === id);
+
+  if (!item) {
+    return null;
+  }
+
+  const {ingredients, status, name, createdAt, number} = item;
 
   const uniqIngredients = [...new Set(ingredients)];
 
@@ -40,7 +52,7 @@ const OrderContent: FC<IOrderContent> = ({_id, ingredients, status, name, create
   
   return (
     <article className={styles.order}>
-      <p className={styles.number + " text text_type_digits-default mb-10"}>#{number}</p>
+      <p className={styles.number + " text text_type_digits-default mb-10 "}>#{number}</p>
       <h2 className="text text_type_main-medium mb-3">{name}</h2>
       <p className={styles.status + " text text_type_main-default mb-15"}>{Status[status]}</p>
       <p className="text text_type_main-medium mb-6">Состав:</p>

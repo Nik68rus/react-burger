@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch(Paths.ORDERS);
 
-  const sortedOrders =orders && orders.length && orders.sort((a:TFeedItem, b: TFeedItem) => +new Date(b.createdAt) - +new Date(a.createdAt));
+  const sortedOrders = orders && orders.length && orders.sort((a:TFeedItem, b: TFeedItem) => +new Date(b.createdAt) - +new Date(a.createdAt));
 
   const initialState = {
     name: user.name,
@@ -149,7 +149,7 @@ const ProfilePage = () => {
         </div>}
         {match && 
           <div className={styles.orders + " custom-scroll pr-4"}>
-            {sortedOrders.map((order: TFeedItem) => <FeedItem key={order._id} order={order} />)}
+            {sortedOrders && sortedOrders.map((order: TFeedItem) => <FeedItem key={order._id} order={order} />)}
           </div>
         }
       </section>

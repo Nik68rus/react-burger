@@ -16,6 +16,7 @@ export const WS_GET_AUTH_MESSAGE: 'WS_GET_AUTH_MESSAGE' = 'WS_GET_AUTH_MESSAGE';
 
 interface IWSConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
+  readonly payload: string;
 }
 
 interface IWSConnectionSuccessAction {
@@ -37,6 +38,7 @@ interface IWSGetMessageAction {
 
 interface IWSConnectionAuthStartAction {
   readonly type: typeof WS_CONNECTION_AUTH_START;
+  readonly payload: string;
 }
 
 interface IWSConnectionAuthSuccessAction {
@@ -56,9 +58,10 @@ interface IWSGetAuthMessageAction {
   readonly payload: any;
 }
 
-export const wsConnectionStart = (): IWSConnectionStartAction => {  
+export const wsConnectionStart = (url: string): IWSConnectionStartAction => {  
   return {
     type: WS_CONNECTION_START,
+    payload: url,
   };
 };
 
@@ -87,9 +90,10 @@ export const wsGetMessage = (message: any): IWSGetMessageAction => {
   };
 };
 
-export const wsConnectionAuthStart = (): IWSConnectionAuthStartAction => {  
+export const wsConnectionAuthStart = (url: string): IWSConnectionAuthStartAction => {  
   return {
     type: WS_CONNECTION_AUTH_START,
+    payload: url,
   };
 };
 

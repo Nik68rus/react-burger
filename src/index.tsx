@@ -22,7 +22,7 @@ import {
 } from './services/actions/web-socket';
 
 import { socketMiddleware } from './services/middleware';
-import { WS_URL } from './utils/data';
+// import { WS_URL } from './utils/data';
 
 declare global {
   interface Window {
@@ -41,14 +41,18 @@ const composeEnhancers =
       onClose: WS_CONNECTION_CLOSED,
       onError: WS_CONNECTION_ERROR,
       onMessage: WS_GET_MESSAGE,
-      wsAuthInit: WS_CONNECTION_AUTH_START,
-      onAuthOpen: WS_CONNECTION_AUTH_SUCCESS,
-      onAuthClose: WS_CONNECTION_AUTH_CLOSED,
-      onAuthError: WS_CONNECTION_AUTH_ERROR,
-      onAuthMessage: WS_GET_AUTH_MESSAGE,
     };
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(WS_URL, wsActions)));
+    
+    const wsAuthActions = {
+      wsInit: WS_CONNECTION_AUTH_START,
+      onOpen: WS_CONNECTION_AUTH_SUCCESS,
+      onClose: WS_CONNECTION_AUTH_CLOSED,
+      onError: WS_CONNECTION_AUTH_ERROR,
+      onMessage: WS_GET_AUTH_MESSAGE,
+    };
+
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions), socketMiddleware(wsAuthActions)));
 
 export const store = createStore(rootReducer, enhancer);
 

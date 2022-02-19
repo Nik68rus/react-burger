@@ -34,7 +34,7 @@ const AppHeader = () => {
           </NavLink>
         </div>
         <nav className={'text text_type_main-default ' + styles.usermenu}>
-          <NavLink className={'p-5 ml-2 ' + styles.button} to={Paths.PROFILE} activeClassName={styles.active}>
+          <NavLink className={'p-5 ml-2 ' + styles.button} to={Paths.PROFILE} exact activeClassName={styles.active}>
             <ProfileIcon type='primary' />
             <span>Личный кабинет</span>
           </NavLink>
