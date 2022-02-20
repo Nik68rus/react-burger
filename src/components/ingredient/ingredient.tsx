@@ -17,7 +17,7 @@ const Ingredient: FC<IIngredient> = ({item}) => {
   const history = useHistory();
   const location = useLocation();
 
-  const cart = useSelector((store: any) => store.ingredient.cart);
+  const cart = useSelector(store => store.ingredient.cart);
 
   const [, ingRef] = useDrag({
     type: 'ingredient',

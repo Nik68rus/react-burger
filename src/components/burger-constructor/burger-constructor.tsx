@@ -23,8 +23,9 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const {cart, order} = useSelector((store: any) => store.ingredient);
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
-  const {message: notification, locked} = useSelector((store: any) => store.app);
+  // const cart: string[] = useSelector(store => store.ingredient.cart);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
+  const {message: notification, locked} = useSelector(store => store.app);
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',

@@ -48,8 +48,6 @@ const Switcher = () => {
   };
 
   const orderHideHandler = () => {
-    console.log(location);
-    
     history.replace({ pathname: location.state.from });
   };
 
@@ -90,6 +88,7 @@ const Switcher = () => {
           <NotFoundPage />
         </Route>
       </Switch>
+
       {background && modalType === 'ingredient' && (
         <Route path={`${Paths.INGREDIENTS}/:id`}>
           <Modal onClose={detailsHideHandler} heading={'Детали ингредиента'}>

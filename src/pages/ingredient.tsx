@@ -9,7 +9,7 @@ import Layout from './layout';
 
 const IngredientPage = () => {
   const {id} = useParams<{id: string}>();
-  const item = useSelector((store: any) => store.ingredient.list.find((ing: TItem) => ing._id === id));
+  const item = useSelector(store => store.ingredient.list.find((ing: TItem) => ing._id === id));
   const dispatch = useDispatch();
 
   useEffect(() => {

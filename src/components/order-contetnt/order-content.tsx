@@ -21,7 +21,7 @@ const OrderContent = () => {
   }
 
   if (orderHistory && orderHistory.length) {
-    allOrders = orders.concat(orderHistory);
+    allOrders = allOrders.concat(orderHistory);
   }
 
   const item: TFeedItem = allOrders.find((order: TFeedItem) => order._id === id);

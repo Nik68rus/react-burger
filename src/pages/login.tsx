@@ -10,7 +10,7 @@ import { makeSignIn } from '../services/actions/user';
 import { History } from 'history';
 
 const LoginPage = () => {
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
   const history = useHistory<History & {from: {pathname: string}}>();
 
   const [form, setForm] = useState({

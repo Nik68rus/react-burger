@@ -7,7 +7,7 @@ import { Loader } from '../components/loader/loader';
 import Notification from '../components/notification/notification';
 
 const Layout: FC = ({children}) => {
-  const {error, message, loader} = useSelector((store: any) => store.app);
+  const {error, message, loader} = useSelector(store => store.app);
 
   return (
     <>

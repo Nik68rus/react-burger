@@ -8,6 +8,7 @@ import OrderList from '../components/order-list/order-list';
 import Figure from '../components/figure/figure';
 import { wsConnectionClose, wsConnectionStart } from '../services/actions/web-socket';
 import { WS_URL } from '../utils/data';
+import { Loader } from '../components/loader/loader';
 
 const FeedPage = () => {
   const {orders, total, totalToday} = useSelector(store => store.ws.feed);
@@ -25,26 +26,29 @@ const FeedPage = () => {
 
   return (
     <Layout>
-      <section className={styles.feed + " wrapper container mt-10"}>
-        <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
-        <div className={styles.content}>
-        <div className={styles.orders + " custom-scroll mr-15 pr-4"}>
-          {
-            orders && orders.length && orders.map((order: TFeedItem, i: number) => <FeedItem key={i} order={order} />)
-          }
-        </div>
-        <div className={styles.stats}>
-          <div className={styles.state + " mb-15"}>
-            <OrderList heading='Готовы:' items={ordersDone}/>
-            <OrderList heading='В работе:' items={ordersInProgress}/>
+      {orders && orders.length &&
+        <section className={styles.feed + " wrapper container mt-10"}>
+          <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
+          <div className={styles.content}>
+          <div className={styles.orders + " custom-scroll mr-15 pr-4"}>
+            {
+              orders && orders.length && orders.map((order: TFeedItem, i: number) => <FeedItem key={i} order={order} />)
+            }
           </div>
-          <div className={styles.figures}>
-            <Figure label="Выполнено за все время:" value={total} />
-            <Figure label="Выполнено за сегодня:" value={totalToday} />
+          <div className={styles.stats}>
+            <div className={styles.state + " mb-15"}>
+              <OrderList heading='Готовы:' items={ordersDone}/>
+              <OrderList heading='В работе:' items={ordersInProgress}/>
+            </div>
+            <div className={styles.figures}>
+              <Figure label="Выполнено за все время:" value={total} />
+              <Figure label="Выполнено за сегодня:" value={totalToday} />
+            </div>
           </div>
-        </div>
-        </div>
-      </section>
+          </div>
+        </section>
+      }
+      {(!orders || !orders.length) && <Loader size='large' />}
     </Layout>
   );
 }

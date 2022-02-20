@@ -12,7 +12,7 @@ interface INatification {
 }
 
 const Notification: FC<INatification> = () => {
-  const message = useSelector((store: any) => store.app.message);
+  const message = useSelector(store => store.app.message);
   const isActive = message.length > 0;
   const dispatch = useDispatch();
 

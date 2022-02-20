@@ -11,9 +11,9 @@ import { resetPassword } from '../services/actions/user';
 const ResetPasswordPage = () => {
   const [form, setForm] = useState({password: '', code: ''});
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
-  const requested = useSelector((store: any) => store.user.recoveryRequested);
-  const recoveryDone = useSelector((store: any) => store.user.recoveryDone);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
+  const requested = useSelector(store => store.user.recoveryRequested);
+  const recoveryDone = useSelector(store => store.user.recoveryDone);
 
   if (isAuthorized) {
     return (

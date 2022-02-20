@@ -16,7 +16,7 @@ const RegisterPage = () => {
   });
 
   const dispatch = useDispatch();
-  const {isAuthorized, justRegistered} = useSelector((store: any) => store.user);
+  const {isAuthorized, justRegistered} = useSelector(store => store.user);
 
   if (isAuthorized) {
     return (

@@ -12,8 +12,8 @@ const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bun');
   const [tabClick, setTabClick] = useState<boolean>(false);
 
-  const list = useSelector((store: any) => store.ingredient.list);
-  const isLoading = useSelector((store: any) => store.ingredient.ingredientsRequest);
+  const list = useSelector(store => store.ingredient.list);
+  const isLoading = useSelector(store => store.ingredient.ingredientsRequest);
 
   const tabClickHandler = (value: string) => {
     setTabClick(true);

@@ -11,8 +11,8 @@ import { requestPasswordRecovery } from '../services/actions/user';
 const ForgotPasswordPage = () => {
   const [mail, setMail] = useState('');
   const dispatch = useDispatch();
-  const requested = useSelector((store: any) => store.user.recoveryRequested);
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
+  const requested = useSelector(store => store.user.recoveryRequested);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
 
   if (isAuthorized) {
     return (

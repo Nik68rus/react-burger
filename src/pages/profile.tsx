@@ -13,6 +13,7 @@ import FeedItem from '../components/feed-item/feed-item';
 import { TFeedItem } from '../types';
 import { wsConnectionAuthClose, wsConnectionAuthStart } from '../services/actions/web-socket';
 import { getCookie } from '../utils/cookies';
+import { Loader } from '../components/loader/loader';
 
 const ProfilePage = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
@@ -62,6 +63,12 @@ const ProfilePage = () => {
     dispatch(makeSignOut());
   };
 
+  const cleaner = useCallback(() => {
+    if (wsAuthConnected) {
+      dispatch(wsConnectionAuthClose());
+    }
+  }, [wsAuthConnected, dispatch]);
+
   useEffect(() => {
     if (match && !wsAuthConnected) {
       dispatch(wsConnectionAuthStart(`${WS_URL}?token=${getCookie('token')}`))
@@ -69,10 +76,11 @@ const ProfilePage = () => {
     if (!match && wsAuthConnected) {
       dispatch(wsConnectionAuthClose());
     };
-    // return () => {      
-    //   dispatch(wsConnectionAuthClose());
-    // }
   }, [match, dispatch, wsAuthConnected]);
+
+  useEffect(() => {
+    return cleaner
+  }, [cleaner]);
 
   return (
     <Layout>
@@ -163,11 +171,12 @@ const ProfilePage = () => {
             </div>
           )}
         </div>}
-        {match && 
+        {match && sortedOrders && sortedOrders.length &&
           <div className={styles.orders + " custom-scroll pr-4"}>
             {sortedOrders && sortedOrders.map((order: TFeedItem) => <FeedItem key={order._id} order={order} showStatus/>)}
           </div>
         }
+        {match && (!sortedOrders || !sortedOrders.length) && <Loader size='large' />}
       </section>
     </Layout>
   );

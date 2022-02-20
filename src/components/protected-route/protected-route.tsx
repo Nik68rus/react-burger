@@ -14,7 +14,7 @@ interface IProtectedRoute {
 export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   const [isUserLoaded, setUserLoaded] = useState(false);
   const dispatch = useDispatch();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
 
   useEffect(() => {
     dispatch(checkAuth());
