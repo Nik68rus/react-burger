@@ -8,10 +8,11 @@ import { useDispatch, useSelector } from '../utils/hooks';
 import { showNotification } from '../services/actions/app';
 import { makeSignIn } from '../services/actions/user';
 import { History } from 'history';
+import { TLocation } from '../types';
 
 const LoginPage = () => {
   const isAuthorized = useSelector(store => store.user.isAuthorized);
-  const history = useHistory<History & {from: {pathname: string}}>();
+  const history = useHistory<History & {from: {pathname: string}, oldState: TLocation}>();
 
   const [form, setForm] = useState({
     email: '',
@@ -35,7 +36,7 @@ const LoginPage = () => {
 
   if (isAuthorized) {
     return (
-      <Redirect to={history.location.state?.from.pathname || Paths.HOME} />
+      <Redirect to={{pathname: history.location.state?.from.pathname || Paths.HOME, state: history.location.state.oldState}} />
     )
   };
 

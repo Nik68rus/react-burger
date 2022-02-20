@@ -70,7 +70,7 @@ const Switcher = () => {
           <ResetPasswordPage />
         </Route>
         <ProtectedRoute path={`${Paths.ORDERS}/:id`} exact={true}>
-          <OrderPage privateRoute/>
+          <OrderPage privateRoute />
         </ProtectedRoute>
         <ProtectedRoute path={Paths.PROFILE}>
           <ProfilePage />
@@ -97,13 +97,25 @@ const Switcher = () => {
         </Route>
       )}
 
-      {background && modalType === 'order' && (
-        <Route path={`${location.state.from}/:id`}>
-          <Modal onClose={orderHideHandler}>
-            <OrderContent />
-          </Modal>
-        </Route>
-      )}
+      {background &&
+        modalType === 'order' &&
+        location.state.from === Paths.FEED && (
+          <Route path={`${location.state.from}/:id`}>
+            <Modal onClose={orderHideHandler}>
+              <OrderContent />
+            </Modal>
+          </Route>
+        )}
+
+      {background &&
+        modalType === 'order' &&
+        location.state.from === Paths.ORDERS && (
+          <ProtectedRoute path={`${location.state.from}/:id`}>
+            <Modal onClose={orderHideHandler}>
+              <OrderContent />
+            </Modal>
+          </ProtectedRoute>
+        )}
     </div>
   );
 };

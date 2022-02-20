@@ -18,7 +18,7 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
 
   useEffect(() => {
     dispatch(checkAuth());
-    setUserLoaded(true);
+    setUserLoaded(true);    
   }, [dispatch]);
 
   if (!isUserLoaded) {
@@ -28,14 +28,13 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        isAuthorized ? (
+      render={({ location }) => isAuthorized ? (
           children
         ) : (
           <Redirect
             to={{
               pathname: Paths.LOGIN,
-              state: { from: location }
+              state: { from: location, oldState: location.state }
             }}
           />
         )

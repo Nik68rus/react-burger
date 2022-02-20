@@ -58,6 +58,24 @@ export type TFeedItem = {
   number: number;
 };
 
+export type TLocation =  {
+  pathname: string;
+  state: {
+    background: TLocation;
+    modal: 'ingredient' | 'order';
+    from?: string;
+    oldState?: {
+      background: TLocation;
+      modal: 'ingredient' | 'order';
+      from?: string;
+    }
+  };
+  search: string;
+  hash: string;
+  key: string;
+}
+
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type TApplicationActions = TAppActions | TUserActions | TIngredientActions;
