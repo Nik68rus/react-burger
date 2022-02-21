@@ -3,7 +3,7 @@ import Layout from './layout';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
 import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { showNotification } from '../services/actions/app';
 import { Paths } from '../utils/data';
 import { registerUser } from '../services/actions/user';
@@ -16,7 +16,7 @@ const RegisterPage = () => {
   });
 
   const dispatch = useDispatch();
-  const {isAuthorized, justRegistered} = useSelector((store: any) => store.user);
+  const {isAuthorized, justRegistered} = useSelector(store => store.user);
 
   if (isAuthorized) {
     return (

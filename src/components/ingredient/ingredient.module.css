@@ -1,8 +1,14 @@
 .ingredient {
+  display: block;
   text-align: center;
   position: relative;
   text-decoration: none;
   color: white;
+  transition: opacity 0.3s ease;
+}
+
+.ingredient:hover {
+  opacity: 0.7;
 }
 
 .ingredient img {

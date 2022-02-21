@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../utils/hooks';
 import AppHeader from '../components/app-header/app-header';
 import ErrorMessage from '../components/error-message/error-message';
 import { Loader } from '../components/loader/loader';
 import Notification from '../components/notification/notification';
 
 const Layout: FC = ({children}) => {
-  const {error, message, loader} = useSelector((store: any) => store.app);
+  const {error, message, loader} = useSelector(store => store.app);
 
   return (
     <>
@@ -17,8 +17,9 @@ const Layout: FC = ({children}) => {
           {
             error ? 
               <ErrorMessage message={message} /> 
-              : loader ? 
+              : loader ? <div className="mt-20">
                 <Loader size='large' /> 
+              </div>
                 : children
           }
         </main>

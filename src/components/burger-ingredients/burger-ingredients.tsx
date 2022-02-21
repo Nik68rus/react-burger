@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import Ingredient from '../ingredient/ingredient';
-import {useSelector} from 'react-redux';
+import {useSelector} from '../../utils/hooks';
 import { Loader } from '../loader/loader';
 import { TItem, TItemType, TTab } from '../../types';
 
@@ -12,8 +12,8 @@ const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bun');
   const [tabClick, setTabClick] = useState<boolean>(false);
 
-  const list = useSelector((store: any) => store.ingredient.list);
-  const isLoading = useSelector((store: any) => store.ingredient.ingredientsRequest);
+  const list = useSelector(store => store.ingredient.list);
+  const isLoading = useSelector(store => store.ingredient.ingredientsRequest);
 
   const tabClickHandler = (value: string) => {
     setTabClick(true);

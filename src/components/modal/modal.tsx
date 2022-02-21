@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { setIngredient } from '../../services/actions';
 import { TItem } from '../../types';
 
@@ -18,9 +18,9 @@ interface IModal {
 const Modal: FC<IModal> = ({onClose, heading, children}) => {
   const {id} = useParams<{id: string}>();
   const dispatch = useDispatch();
-  const list = useSelector((store: any) => store.ingredient.list);
+  const list = useSelector(store => store.ingredient.list);
   const item = list.find((ing: TItem) => ing._id === id);
-  const ingredientsLoaded = useSelector((store: any) => store.ingredient.ingredientsLoaded);
+  const ingredientsLoaded = useSelector(store => store.ingredient.ingredientsLoaded);
 
   useEffect(() => {
     if (ingredientsLoaded && item) {

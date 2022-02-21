@@ -1,21 +1,32 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import Layout from './layout';
 import {
   Button,
   Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { NavLink } from 'react-router-dom';
-import { Paths } from '../utils/data';
-import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import { Paths, WS_URL } from '../utils/data';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { makeSignOut, updateUser } from '../services/actions/user';
+import FeedItem from '../components/feed-item/feed-item';
+import { TFeedItem } from '../types';
+import { wsConnectionAuthClose, wsConnectionAuthStart } from '../services/actions/web-socket';
+import { getCookie } from '../utils/cookies';
+import { Loader } from '../components/loader/loader';
 
 const ProfilePage = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
   const [mailDisabled, setMailDisabled] = useState(true);
   const [passwordDisabled, setPasswordDisabled] = useState(true);
-  const { user } = useSelector((store: any) => store);
+  const { user } = useSelector(store => store);
+  const {orders} = useSelector(store => store.ws.orderHistory);
+  const {wsAuthConnected} = useSelector(store => store.ws);
+
   const dispatch = useDispatch();
+  const match = useRouteMatch(Paths.ORDERS);
+
+  const sortedOrders = orders && orders.length && orders.sort((a:TFeedItem, b: TFeedItem) => +new Date(b.createdAt) - +new Date(a.createdAt));
 
   const initialState = {
     name: user.name,
@@ -52,6 +63,25 @@ const ProfilePage = () => {
     dispatch(makeSignOut());
   };
 
+  const cleaner = useCallback(() => {
+    if (wsAuthConnected) {
+      dispatch(wsConnectionAuthClose());
+    }
+  }, [wsAuthConnected, dispatch]);
+
+  useEffect(() => {
+    if (match && !wsAuthConnected) {
+      dispatch(wsConnectionAuthStart(`${WS_URL}?token=${getCookie('token')}`))
+    };
+    if (!match && wsAuthConnected) {
+      dispatch(wsConnectionAuthClose());
+    };
+  }, [match, dispatch, wsAuthConnected]);
+
+  useEffect(() => {
+    return cleaner
+  }, [cleaner]);
+
   return (
     <Layout>
       <section className={'container mt-30 ' + styles.profile}>
@@ -86,10 +116,11 @@ const ProfilePage = () => {
               styles.description + ' mt-20 text text_type_main-default'
             }
           >
-            В этом разделе вы можете изменить свои персональные данные
+            {!match && 'В этом разделе вы можете изменить свои персональные данные'}
+            {match && 'В этом разделе вы можете просмотреть свою историю заказов'}
           </p>
         </div>
-        <div className={styles.form}>
+        {!match && <div className={styles.form}>
           <form className="mb-20">
             <Input
               type={'text'}
@@ -139,7 +170,13 @@ const ProfilePage = () => {
               </Button>
             </div>
           )}
-        </div>
+        </div>}
+        {match && sortedOrders && sortedOrders.length &&
+          <div className={styles.orders + " custom-scroll pr-4"}>
+            {sortedOrders && sortedOrders.map((order: TFeedItem) => <FeedItem key={order._id} order={order} showStatus/>)}
+          </div>
+        }
+        {match && (!sortedOrders || !sortedOrders.length) && <Loader size='large' />}
       </section>
     </Layout>
   );

@@ -3,10 +3,24 @@ import {
   SIGN_OUT,
   REQUEST_RECOVERY,
   RECOVERY_SUCCESS,
-  REGISTRATION_SUCCESS
+  REGISTRATION_SUCCESS,
 } from '../actions/user';
 
-const initialState = {
+import type {
+  TUserActions
+} from '../actions/user';
+
+type TUserState = {
+  isAuthorized: boolean;
+  recoveryRequested: boolean;
+  recoveryDone: boolean;
+  justRegistered: boolean;
+  name: string;
+  email: string;
+  password: string;
+};
+
+const initialState: TUserState = {
   isAuthorized: false,
   recoveryRequested: false,
   recoveryDone: false,
@@ -16,7 +30,7 @@ const initialState = {
   password: ''
 };
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case SIGN_IN: {
       return {

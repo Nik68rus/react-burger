@@ -1,19 +1,19 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './forms.module.css';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Layout from './layout';
-import { Paths, URL } from '../utils/data';
-import { useDispatch, useSelector } from 'react-redux';
+import { Paths } from '../utils/data';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { showNotification } from '../services/actions/app';
+import { resetPassword } from '../services/actions/user';
 
 const ResetPasswordPage = () => {
   const [form, setForm] = useState({password: '', code: ''});
   const dispatch = useDispatch();
-  const history = useHistory();
-  const isAuthorized = useSelector((store: any) => store.user.isAuthorized);
-  const requested = useSelector((store: any) => store.user.recoveryRequested);
-  const recoveryDone = useSelector((store: any) => store.user.recoveryDone);
+  const isAuthorized = useSelector(store => store.user.isAuthorized);
+  const requested = useSelector(store => store.user.recoveryRequested);
+  const recoveryDone = useSelector(store => store.user.recoveryDone);
 
   if (isAuthorized) {
     return (
@@ -21,7 +21,7 @@ const ResetPasswordPage = () => {
     )
   };
 
-  if (!requested) {
+  if (!requested && !recoveryDone) {
     return (
       <Redirect to={{pathname: Paths.FORGOT}} />
     )
@@ -43,29 +43,8 @@ const ResetPasswordPage = () => {
     if (form.password.trim() === '' || form.code.trim() === '') {
       dispatch(showNotification('Заполните все поля!'))
     } else {
-      fetch(`${URL}/password-reset/reset`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({password: form.password, token: form.code}),
-      })
-      .then(response => {
-        if (!response.ok) {
-          dispatch(showNotification('Что-то пошло не так. Попробуйте позже!'))
-        }
-        return response.json()
-      })
-      .then(data => {
-        if (!data.success) {
-          dispatch(showNotification(data.message))
-        } else {
-          history.replace({ pathname: Paths.LOGIN });
-          dispatch(showNotification('Пароль успешно изменен!'))
-        }
-      });
+      dispatch(resetPassword(form));
     }
-    
   }
 
   return (

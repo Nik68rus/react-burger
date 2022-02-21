@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch} from '../../utils/hooks';
 import styles from './burger-part.module.css';
 import {
   ConstructorElement,

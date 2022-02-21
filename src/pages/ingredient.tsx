@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 import Page404 from '../components/page-404/page-404';
@@ -9,7 +9,7 @@ import Layout from './layout';
 
 const IngredientPage = () => {
   const {id} = useParams<{id: string}>();
-  const item = useSelector((store: any) => store.ingredient.list.find((ing: TItem) => ing._id === id));
+  const item = useSelector(store => store.ingredient.list.find((ing: TItem) => ing._id === id));
   const dispatch = useDispatch();
 
   useEffect(() => {

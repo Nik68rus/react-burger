@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
-import {useSelector} from 'react-redux';
+import {useSelector} from '../../utils/hooks';
 
 const IngredientDetails = () => {
   const item = useSelector((store: any) => store.ingredient.currentIngredient);

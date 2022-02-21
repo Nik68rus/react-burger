@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from '../../utils/hooks';
 import {useDrag} from 'react-dnd';
 import {useHistory, useLocation, Link} from 'react-router-dom';
 import { Paths } from '../../utils/data';
@@ -17,7 +17,7 @@ const Ingredient: FC<IIngredient> = ({item}) => {
   const history = useHistory();
   const location = useLocation();
 
-  const cart = useSelector((store: any) => store.ingredient.cart);
+  const cart = useSelector(store => store.ingredient.cart);
 
   const [, ingRef] = useDrag({
     type: 'ingredient',
@@ -33,11 +33,11 @@ const Ingredient: FC<IIngredient> = ({item}) => {
   }
 
   return (
-    <Link to={{pathname: `${Paths.INGREDIENTS}/${item._id}`, state: {background: location}}} className={styles.ingredient + ' pl-4 pr-4'} onClick={ingredientClickHandler} ref={ingRef}>
+    <Link to={{pathname: `${Paths.INGREDIENTS}/${item._id}`, state: {background: location, modal: 'ingredient'}}} className={styles.ingredient + ' pl-4 pr-4'} onClick={ingredientClickHandler} ref={ingRef}>
       {(amount > 0) && <Counter count={amount} size="default" />}
       <img src={item.image} alt={item.name} />
       <div className={styles.price + ' text text_type_digits-default mt-1 mb-1'}>
-        {item.price}
+        {item.price.toLocaleString('ru-RU')}
         <CurrencyIcon type="primary" />
       </div>
       <h4 className="text text_type_main-default">{item.name}</h4>
