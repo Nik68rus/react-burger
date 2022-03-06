@@ -8,3 +8,5 @@ This is the project for React Course by Yandex Practicum.
 
 Для установки зависимостей проекта необходимо выпонить команду npm i.
 Для запуска проекта служит команда npm start.
+
+Готовое приложение можно найти по адресу https://nik68rus.nomoredomains.work/
